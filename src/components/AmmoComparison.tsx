@@ -98,17 +98,21 @@ const AmmoComparison: React.FC = () => {
   const helmArmorLevels: ('I' | 'IIA' | 'IIA+')[] = ['I', 'IIA', 'IIA+'];
   const bodyArmorLevels: ('IIIA' | 'IIIA+' | 'III' | 'III+')[] = ['IIIA', 'IIIA+', 'III', 'III+'];
 
-  // Custom tooltip for charts
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-secondary border border-gray-700 rounded-md shadow-lg p-3">
-          <p className="font-medium text-text">{label}</p>
-          <div className="mt-1">
+        <div className="bg-secondary border border-gray-700 rounded-md shadow-xl p-4" style={{ backgroundColor: 'rgb(32, 32, 35)', opacity: 1 }}>
+          <p className="font-medium text-text text-base">{label}</p>
+          <div className="mt-2 space-y-1.5">
             {payload.map((entry: any, index: number) => (
-              <p key={index} className="text-sm" style={{ color: entry.color }}>
-                {entry.name}: {entry.value.toLocaleString()} {entry.unit || ''}
-              </p>
+              <div key={index} className="flex items-center">
+                <div className="h-3 w-3 rounded-full mr-2" style={{ backgroundColor: entry.color }}></div>
+                <p className="text-sm text-text">
+                  <span className="font-medium">{entry.name}:</span>{' '}
+                  <span className="text-text">{entry.value.toLocaleString()}</span>
+                  {entry.unit && <span className="text-muted ml-1">{entry.unit}</span>}
+                </p>
+              </div>
             ))}
           </div>
         </div>
@@ -116,6 +120,7 @@ const AmmoComparison: React.FC = () => {
     }
     return null;
   };
+
 
   // Generate a unique color for each ammo type
   const getAmmoColor = (index: number) => {
@@ -465,22 +470,36 @@ const AmmoComparison: React.FC = () => {
       </div>
 
       {/* Custom scrollbar styles */}
+      // Add this to your style section at the bottom of the component
       <style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(31, 41, 55, 0.5);
-          border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(75, 85, 99, 0.8);
-          border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(107, 114, 128, 0.8);
-        }
-      `}</style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.5);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(75, 85, 99, 0.8);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(107, 114, 128, 0.8);
+  }
+  
+  /* Remove the default recharts tooltip background */
+  .recharts-tooltip-wrapper .recharts-default-tooltip {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Ensure the tooltip cursor doesn't show the default background */
+  .recharts-tooltip-cursor {
+    fill: rgba(0, 0, 0, 0.1) !important;
+  }
+`}</style>
+
     </div>
   );
 };
