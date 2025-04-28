@@ -7,22 +7,14 @@ import { dependencies } from './package.json';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? 'https://gzw-ammo-analyzer.pages.dev/' : '',
+  base: process.env.NODE_ENV === 'production' ? 'https://gzw-ammo-analyzer.pages.dev/module' : '',
   plugins: [
     react(),
     tailwindcss(),
     federation({
-      name: 'host',
+      name: 'ammo_analyzer',
       manifest: true,
-      remotes: {
-        ammo_analyzer: {
-          type: "module",
-          name: 'ammo_analyzer',
-          entry: 'https://gzw-ammo-analyzer.pages.dev/module/remoteEntry.js',
-          entryGlobalName: "ammo_analyzer",
-          shareScope: "default",
-        }
-      },
+      filename: 'remoteEntry.js',
       exposes: {
         './App': './src/App.tsx',
       },
@@ -40,12 +32,11 @@ export default defineConfig({
   ],
   build: {
     target: 'chrome89',
-    outDir: 'dist',
-    emptyOutDir: true,
+    outDir: 'dist/module',
+    emptyOutDir: false,
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'src/main.tsx'),
-        index: resolve(__dirname, 'index.html'),
+        app: resolve(__dirname, 'src/App.tsx'),
       }
     }
   }

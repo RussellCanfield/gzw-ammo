@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navigation from './components/Navigation';
 import Ammunition from './pages/Ammunition';
@@ -49,6 +49,11 @@ function App() {
                 <Compare />
               </PageContainer>
             } />
+            <Route path="*" element={
+              <PageContainer>
+                <Ammunition />
+              </PageContainer>
+            } />
           </Routes>
         </main>
         <footer className="mt-12 py-8 bg-secondary shadow-inner">
@@ -56,7 +61,6 @@ function App() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center">
                 <img src={logo} alt="Logo" className="h-16 mr-2" />
-                <span className="text-white text-lg font-bold">GZW</span>
               </div>
             </div>
           </div>

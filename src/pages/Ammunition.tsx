@@ -1,40 +1,49 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { getAllCalibers, getAmmoByCalibrer, AmmoType } from '../data/ammoData';
 import AmmoCard from '../components/AmmoCard';
 
 const Ammunition: React.FC = () => {
-  const [calibers, setCalibers] = useState<string[]>([]);
-  const [selectedCaliber, setSelectedCaliber] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialCaliber = searchParams.get('caliber') || '5.56x45';
+  const initialSearch = searchParams.get('search') || '';
+  const initialSortBy = searchParams.get('sortBy') || 'name';
+  const initialSortDir = searchParams.get('sortDir') as 'asc' | 'desc' || 'asc';
+
+  const [calibers] = useState<string[]>(getAllCalibers());
+  const [selectedCaliber, setSelectedCaliber] = useState<string>(initialCaliber);
   const [ammoList, setAmmoList] = useState<AmmoType[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortBy, setSortBy] = useState<string>('name');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-  
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
+  const [sortBy, setSortBy] = useState<string>(initialSortBy);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>(initialSortDir);
+
   useEffect(() => {
-    const allCalibers = getAllCalibers();
-    setCalibers(allCalibers);
-    if (allCalibers.length > 0) {
-      setSelectedCaliber(allCalibers[0]);
-    }
-  }, []);
-  
+    // Update URL parameters when state changes
+    setSearchParams({
+      caliber: selectedCaliber,
+      search: searchQuery,
+      sortBy,
+      sortDir: sortDirection
+    });
+  }, [selectedCaliber, searchQuery, sortBy, sortDirection, setSearchParams]);
+
   useEffect(() => {
     if (selectedCaliber) {
       let ammoOptions = getAmmoByCalibrer(selectedCaliber);
-      
+
       // Apply search filter if query exists
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
-        ammoOptions = ammoOptions.filter(ammo => 
-          ammo.name.toLowerCase().includes(query) || 
+        ammoOptions = ammoOptions.filter(ammo =>
+          ammo.name.toLowerCase().includes(query) ||
           ammo.traderUnlock.toLowerCase().includes(query)
         );
       }
-      
+
       // Apply sorting
       ammoOptions = [...ammoOptions].sort((a, b) => {
         let valueA, valueB;
-        
+
         switch (sortBy) {
           case 'name':
             valueA = a.name;
@@ -56,44 +65,51 @@ const Ammunition: React.FC = () => {
             valueA = a.name;
             valueB = b.name;
         }
-        
+
         if (sortDirection === 'asc') {
           return valueA > valueB ? 1 : -1;
         } else {
           return valueA < valueB ? 1 : -1;
         }
       });
-      
+
       setAmmoList(ammoOptions);
     }
   }, [selectedCaliber, searchQuery, sortBy, sortDirection]);
-  
+
   const handleCaliberChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCaliber(e.target.value);
   };
-  
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-  
+
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(e.target.value);
   };
-  
+
   const toggleSortDirection = () => {
     setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
   };
-  
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-text mb-2">Ammunition Database</h1>
-        <p className="text-muted">
+      <div className="mb-4 bg-gradient-to-r from-secondary to-secondary/50 p-6 rounded-lg shadow-lg">
+        <h1 className="text-4xl font-bold text-text mb-2 flex items-center">
+          <span className="mr-2">Ammunition Database</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </h1>
+        <p className="text-muted text-lg">
           Browse all ammunition types available in Gray Zone Warfare
         </p>
       </div>
-      
-      <div className="bg-secondary rounded-lg shadow-lg p-6 mb-6">
+
+      <div className="bg-secondary rounded-lg shadow-lg p-6 mb-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label htmlFor="caliber-select" className="block text-sm font-medium text-muted mb-1">
@@ -112,7 +128,7 @@ const Ammunition: React.FC = () => {
               ))}
             </select>
           </div>
-          
+
           <div>
             <label htmlFor="ammo-search" className="block text-sm font-medium text-muted mb-1">
               Search
@@ -126,7 +142,7 @@ const Ammunition: React.FC = () => {
               onChange={handleSearchChange}
             />
           </div>
-          
+
           <div>
             <label htmlFor="sort-by" className="block text-sm font-medium text-muted mb-1">
               Sort By
@@ -153,7 +169,7 @@ const Ammunition: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {ammoList.length > 0 ? (
           ammoList.map(ammo => (

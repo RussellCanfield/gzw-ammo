@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import AmmoComparison from '../components/AmmoComparison';
 import { PenetrationValue, penetrationColorClass, penetrationLevelText } from '../data/ammoData';
+import { getAllCalibers } from '../data/ammoData';
 
 const Compare: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialCaliber = searchParams.get('caliber') || '';
+  const initialSelectedTypes = searchParams.get('types') ? searchParams.get('types')!.split(',') : [];
+
+  const [calibers, setCalibers] = useState<string[]>([]);
+  const [selectedCaliber, setSelectedCaliber] = useState<string>(initialCaliber);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(initialSelectedTypes);
+
+  useEffect(() => {
+    const allCalibers = getAllCalibers();
+    setCalibers(allCalibers);
+    if (allCalibers.length > 0 && !selectedCaliber) {
+      setSelectedCaliber(allCalibers[0]);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update URL parameters when state changes
+    setSearchParams({
+      caliber: selectedCaliber,
+      types: selectedTypes.join(','),
+    });
+  }, [selectedCaliber, selectedTypes, setSearchParams]);
+
+  const handleCaliberChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCaliber(e.target.value);
+    setSelectedTypes([]); // Reset selected types when caliber changes
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8 bg-gradient-to-r from-secondary to-secondary/50 p-6 rounded-lg shadow-lg">
+      <div className="mb-4 bg-gradient-to-r from-secondary to-secondary/50 p-6 rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-text mb-2 flex items-center">
           <span className="mr-2">Compare Ammunition</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -19,12 +50,29 @@ const Compare: React.FC = () => {
           Select ammunition types to compare their performance and penetration capabilities
         </p>
       </div>
-      
-      <div className="bg-secondary rounded-lg shadow-lg overflow-hidden mb-10">
-        <AmmoComparison />
+
+      <div className="bg-secondary rounded-lg shadow-lg overflow-hidden mb-4 p-6">
+        <div className="mb-4">
+          <label htmlFor="caliber-select" className="block text-sm font-medium text-muted mb-1">
+            Caliber
+          </label>
+          <select
+            id="caliber-select"
+            className="w-full px-3 py-2 bg-primary border border-gray-700 rounded-md text-text focus:outline-none focus:ring-2 focus:ring-accent"
+            value={selectedCaliber}
+            onChange={handleCaliberChange}
+          >
+            {calibers.map(caliber => (
+              <option key={caliber} value={caliber}>
+                {caliber}
+              </option>
+            ))}
+          </select>
+        </div>
+        <AmmoComparison caliber={selectedCaliber} selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
       </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-2">
         <div className="bg-secondary rounded-lg p-6 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center mb-4">
             <div className="p-3 bg-accent/20 rounded-full mr-3">
@@ -56,7 +104,7 @@ const Compare: React.FC = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="bg-secondary rounded-lg p-6 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center mb-4">
             <div className="p-3 bg-accent/20 rounded-full mr-3">
@@ -83,7 +131,7 @@ const Compare: React.FC = () => {
                 Lower is better. Negative values mean improved accuracy while positive values indicate reduced accuracy.
               </p>
             </div>
-            
+
             <div className="p-3 rounded-lg bg-primary/50">
               <div className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -96,7 +144,7 @@ const Compare: React.FC = () => {
                 Higher values mean faster bullets, resulting in less bullet drop and travel time.
               </p>
             </div>
-            
+
             <div className="p-3 rounded-lg bg-primary/50">
               <div className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -113,7 +161,7 @@ const Compare: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-secondary rounded-lg p-6 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
           <div className="flex items-center mb-4">
             <div className="p-3 bg-accent/20 rounded-full mr-3">
@@ -142,7 +190,7 @@ const Compare: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="bg-secondary rounded-lg p-6 shadow-lg">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-accent/20 rounded-full mr-3">
@@ -153,7 +201,7 @@ const Compare: React.FC = () => {
           </div>
           <h2 className="text-2xl font-bold text-text">Armor Penetration Guide</h2>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-primary/50 rounded-lg p-4">
             <h3 className="text-lg font-medium text-text mb-3 flex items-center">
@@ -180,7 +228,7 @@ const Compare: React.FC = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="bg-primary/50 rounded-lg p-4">
             <h3 className="text-lg font-medium text-text mb-3 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

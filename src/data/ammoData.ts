@@ -549,10 +549,11 @@ export const penetrationLevelText = (value: PenetrationValue): string => {
 // Helper function to get color class for penetration values based on image legend
 export const penetrationColorClass = (value: PenetrationValue): string => {
   switch(value) {
-    case 0: return 'bg-red-600';    // No penetration (Red)
-    case 1: return 'bg-orange-500'; // Low penetration (Orange)
-    case 2: return 'bg-yellow-500'; // Medium penetration (Yellow)
-    case 3: return 'bg-green-500';  // High penetration (Green)
+    case 0: return 'bg-green-500';  // No penetration (Green)
+    case 1: return 'bg-yellow-500'; // Low penetration (Yellow)
+    case 2: return 'bg-orange-500'; // Medium penetration (Orange)
+    case 3: return 'bg-red-600';    // High penetration (Red)
     default: return 'bg-gray-400';
   }
 };
+

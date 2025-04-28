@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AmmoType, getAllCalibers, getAmmoByCalibrer, penetrationColorClass, penetrationLevelText } from '../data/ammoData';
+import { AmmoType, getAmmoByCalibrer, penetrationColorClass, penetrationLevelText } from '../data/ammoData';
 import {
   BarChart,
   Bar,
@@ -9,13 +9,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  // RadarChart,
-  // PolarGrid,
-  // PolarAngleAxis,
-  // PolarRadiusAxis,
-  // Radar,
-  // LineChart,
-  // Line
 } from 'recharts';
 
 interface ComparisonData {
@@ -24,76 +17,39 @@ interface ComparisonData {
   dispersion: number;
 }
 
-const AmmoComparison: React.FC = () => {
-  const [selectedCaliber, setSelectedCaliber] = useState<string>('');
-  const [selectedAmmo, setSelectedAmmo] = useState<string[]>([]);
-  const [calibers, setCalibers] = useState<string[]>([]);
+interface AmmoComparisonProps {
+  caliber: string;
+  selectedTypes: string[];
+  setSelectedTypes: (types: string[]) => void;
+}
+
+const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes, setSelectedTypes }) => {
   const [ammoOptions, setAmmoOptions] = useState<AmmoType[]>([]);
   const [activeTab, setActiveTab] = useState<'charts' | 'penetration' | 'details'>('charts');
 
-  // Initialize with available calibers
-  useEffect(() => {
-    const allCalibers = getAllCalibers();
-    setCalibers(allCalibers);
-    if (allCalibers.length > 0) {
-      setSelectedCaliber(allCalibers[0]);
-    }
-  }, []);
-
   // Update ammo options when caliber changes
   useEffect(() => {
-    if (selectedCaliber) {
-      const options = getAmmoByCalibrer(selectedCaliber);
+    if (caliber) {
+      const options = getAmmoByCalibrer(caliber);
       setAmmoOptions(options);
-      setSelectedAmmo([]); // Reset selected ammo when caliber changes
     }
-  }, [selectedCaliber]);
-
-  const handleCaliberChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCaliber(e.target.value);
-  };
+  }, [caliber]);
 
   const handleAmmoToggle = (id: string) => {
-    setSelectedAmmo(prev =>
-      prev.includes(id)
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
+    setSelectedTypes(
+      selectedTypes.includes(id)
+        ? selectedTypes.filter(item => item !== id)
+        : [...selectedTypes, id]
     );
   };
 
-  const selectedAmmoData = ammoOptions.filter(ammo => selectedAmmo.includes(ammo.id));
+  const selectedAmmoData = ammoOptions.filter(ammo => selectedTypes.includes(ammo.id));
 
   const chartData: ComparisonData[] = selectedAmmoData.map(ammo => ({
     name: ammo.name,
     velocity: ammo.velocity,
     dispersion: ammo.dispersion,
   }));
-
-  // Prepare radar chart data
-  // const radarData = selectedAmmoData.map(ammo => {
-  //   // Normalize dispersion to a positive scale for radar chart
-  //   // Convert from range (-50 to 50) to (0 to 100)
-  //   const normalizedDispersion = 50 - ammo.dispersion;
-
-  //   return {
-  //     name: ammo.name,
-  //     // Scale values to be visually comparable
-  //     velocity: ammo.velocity / 10, // Scale down velocity
-  //     accuracy: normalizedDispersion, // Higher is better
-  //     penetration: calculatePenetrationScore(ammo),
-  //     price: ammo.price ? Math.min(100, (100 - ammo.price)) : 50, // Invert price (lower is better)
-  //   };
-  // });
-
-  // Calculate a penetration score based on armor penetration values
-  // function calculatePenetrationScore(ammo: AmmoType): number {
-  //   const helmValues = Object.values(ammo.helmPenetration);
-  //   const bodyValues = Object.values(ammo.bodyPenetration);
-  //   const totalValues = [...helmValues, ...bodyValues];
-  //   const sum = totalValues.reduce((acc, val) => acc + val, 0);
-  //   // Scale to 0-100
-  //   return (sum / (totalValues.length * 3)) * 100;
-  // }
 
   const helmArmorLevels: ('I' | 'IIA' | 'IIA+')[] = ['I', 'IIA', 'IIA+'];
   const bodyArmorLevels: ('IIIA' | 'IIIA+' | 'III' | 'III+')[] = ['IIIA', 'IIIA+', 'III', 'III+'];
@@ -121,7 +77,6 @@ const AmmoComparison: React.FC = () => {
     return null;
   };
 
-
   // Generate a unique color for each ammo type
   const getAmmoColor = (index: number) => {
     const colors = [
@@ -140,52 +95,25 @@ const AmmoComparison: React.FC = () => {
   return (
     <div className="overflow-hidden">
       <div className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-primary/50 rounded-lg p-4 shadow-inner">
-            <label htmlFor="caliber-select" className="block text-sm font-medium text-muted mb-2">
-              Select Caliber
-            </label>
-            <div className="relative">
-              <select
-                id="caliber-select"
-                className="w-full px-4 py-2.5 bg-secondary text-text border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-accent appearance-none"
-                value={selectedCaliber}
-                onChange={handleCaliberChange}
-              >
-                {calibers.map(caliber => (
-                  <option key={caliber} value={caliber}>
-                    {caliber}
-                  </option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-muted">
-                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+        <div className="bg-primary/50 rounded-lg p-4 shadow-inner mb-6">
+          <label className="block text-sm font-medium text-muted mb-2">
+            Select Ammunition Types to Compare
+          </label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+            {ammoOptions.map(ammo => (
+              <div key={ammo.id} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={`ammo-${ammo.id}`}
+                  className="h-4 w-4 rounded border-gray-700 text-accent focus:ring-accent"
+                  checked={selectedTypes.includes(ammo.id)}
+                  onChange={() => handleAmmoToggle(ammo.id)}
+                />
+                <label htmlFor={`ammo-${ammo.id}`} className="ml-2 text-sm text-text truncate">
+                  {ammo.name}
+                </label>
               </div>
-            </div>
-          </div>
-
-          <div className="bg-primary/50 rounded-lg p-4 shadow-inner">
-            <label className="block text-sm font-medium text-muted mb-2">
-              Select Ammunition Types to Compare
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-              {ammoOptions.map(ammo => (
-                <div key={ammo.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`ammo-${ammo.id}`}
-                    className="h-4 w-4 rounded border-gray-700 text-accent focus:ring-accent"
-                    checked={selectedAmmo.includes(ammo.id)}
-                    onChange={() => handleAmmoToggle(ammo.id)}
-                  />
-                  <label htmlFor={`ammo-${ammo.id}`} className="ml-2 text-sm text-text truncate">
-                    {ammo.name}
-                  </label>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
 
@@ -225,38 +153,6 @@ const AmmoComparison: React.FC = () => {
 
             {activeTab === 'charts' && (
               <div className="space-y-8">
-                {/* <div className="bg-primary/30 rounded-lg p-4">
-                  <h3 className="text-lg font-medium mb-4 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="12" y1="8" x2="12" y2="12"></line>
-                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                    Overall Performance Comparison
-                  </h3>
-                  <div className="h-80">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <RadarChart outerRadius="80%" data={radarData}>
-                        <PolarGrid stroke="#444" />
-                        <PolarAngleAxis dataKey="name" tick={{ fill: '#e5e7eb' }} />
-                        <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fill: '#e5e7eb' }} />
-                        {selectedAmmoData.map((ammo, index) => (
-                          <Radar
-                            key={ammo.id}
-                            name={ammo.name}
-                            dataKey="velocity"
-                            stroke={getAmmoColor(index)}
-                            fill={getAmmoColor(index)}
-                            fillOpacity={0.2}
-                          />
-                        ))}
-                        <Tooltip content={<CustomTooltip />} />
-                        <Legend wrapperStyle={{ color: '#e5e7eb' }} />
-                      </RadarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div> */}
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-primary/30 rounded-lg p-4">
                     <h3 className="text-lg font-medium mb-4 flex items-center">
@@ -464,13 +360,12 @@ const AmmoComparison: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <p className="text-muted text-lg">Select ammunition types to compare</p>
-            <p className="text-sm text-muted mt-2">Choose a caliber and select at least one ammunition type</p>
+            <p className="text-sm text-muted mt-2">Choose at least one ammunition type</p>
           </div>
         )}
       </div>
 
       {/* Custom scrollbar styles */}
-      // Add this to your style section at the bottom of the component
       <style>{`
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;

@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import './index.css'
+import Bootstrap from './Bootstrap'
 
 ReactDOM.createRoot(document.getElementById('ammo-root')!).render(
   <React.StrictMode>
-    <App />
+    <Bootstrap />
   </React.StrictMode>,
 )
