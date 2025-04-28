@@ -1,4 +1,4 @@
-export type ArmorLevel = 'IIA' | 'IIA+' | 'IIIA' | 'IIIA+' | 'III' | 'III+';
+ export type ArmorLevel = 'I' | 'IIA' | 'IIA+' | 'IIIA' | 'IIIA+' | 'III' | 'III+';
 export type PenetrationValue = 0 | 1 | 2 | 3; // 0:Red, 1:Orange, 2:Yellow, 3:Green
 
 export interface AmmoType {
@@ -10,19 +10,20 @@ export interface AmmoType {
   traderUnlock: string;
   price: number | null;
   helmPenetration: {
+    'I': PenetrationValue;
     'IIA': PenetrationValue;
     'IIA+': PenetrationValue;
-    'IIIA': PenetrationValue;
-    'IIIA+': PenetrationValue;
   };
   bodyPenetration: {
+    'IIIA': PenetrationValue;
+    'IIIA+': PenetrationValue;
     'III': PenetrationValue;
     'III+': PenetrationValue;
   };
   description?: string;
 }
 
-// Data extracted from the provided image
+// Data extracted from the provided image and verified/corrected
 export const ammoData: AmmoType[] = [
   // 7.65 browning
   {
@@ -33,8 +34,8 @@ export const ammoData: AmmoType[] = [
     velocity: 318,
     traderUnlock: 'Artisan LV1',
     price: 15,
-    helmPenetration: { 'IIA': 2, 'IIA+': 1, 'IIIA': 0, 'IIIA+': 0 }, // Yellow, Orange, Red, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 0, 'IIA': 0, 'IIA+': 0 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '765-jhp',
@@ -44,8 +45,8 @@ export const ammoData: AmmoType[] = [
     velocity: 283,
     traderUnlock: 'Artisan LV2',
     price: 25,
-    helmPenetration: { 'IIA': 2, 'IIA+': 1, 'IIIA': 0, 'IIIA+': 0 }, // Yellow, Orange, Red, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 0, 'IIA': 0, 'IIA+': 0 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   // 7.62x25
   {
@@ -56,8 +57,8 @@ export const ammoData: AmmoType[] = [
     velocity: 427,
     traderUnlock: 'Artisan LV1',
     price: 15,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 1, 'IIIA+': 0 }, // Green, Yellow, Orange, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '762x25-pst',
@@ -67,8 +68,8 @@ export const ammoData: AmmoType[] = [
     velocity: 430,
     traderUnlock: 'Artisan LV2',
     price: 25,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 1, 'IIIA+': 0 }, // Green, Yellow, Orange, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '762x25-pt',
@@ -78,8 +79,8 @@ export const ammoData: AmmoType[] = [
     velocity: 415,
     traderUnlock: 'Artisan LV3',
     price: 15,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 1, 'IIIA+': 0 }, // Green, Yellow, Orange, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   // 9mm
   {
@@ -90,8 +91,8 @@ export const ammoData: AmmoType[] = [
     velocity: 390,
     traderUnlock: 'Gunny LV1',
     price: 15,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 1, 'IIIA+': 0 }, // Green, Yellow, Orange, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '9mm-hp',
@@ -101,8 +102,8 @@ export const ammoData: AmmoType[] = [
     velocity: 377,
     traderUnlock: 'Gunny LV1',
     price: 25,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 1, 'IIIA+': 0 }, // Green, Yellow, Orange, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '9mm-tracer',
@@ -112,8 +113,8 @@ export const ammoData: AmmoType[] = [
     velocity: 342,
     traderUnlock: 'Gunny LV2',
     price: 25,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 1, 'IIIA+': 0 }, // Green, Yellow, Orange, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '9mm-xpen',
@@ -123,19 +124,19 @@ export const ammoData: AmmoType[] = [
     velocity: 381,
     traderUnlock: 'Gunny LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 1, 'IIIA+': 0 }, // Green, Yellow, Orange, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '9mm-ls9mm',
     caliber: '9mm',
     name: 'LS 9MM',
-    dispersion: -2,
+    dispersion: -2, // Image shows '?' for dispersion, using -2 as placeholder or previous value
     velocity: 0, // Velocity is '?' in image
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 2, 'IIIA+': 1 }, // Green, Green, Yellow, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 2 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   // 5.45x39
   {
@@ -145,9 +146,9 @@ export const ammoData: AmmoType[] = [
     dispersion: 0,
     velocity: 884,
     traderUnlock: 'Tumcont LV1',
-    price: 15,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    price: 15, // Image shows $1
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '545-us',
@@ -156,9 +157,9 @@ export const ammoData: AmmoType[] = [
     dispersion: 6,
     velocity: 304,
     traderUnlock: 'Tumcont LV2',
-    price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    price: 35, // Image shows $3
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '545-hp',
@@ -167,9 +168,9 @@ export const ammoData: AmmoType[] = [
     dispersion: 6,
     velocity: 884,
     traderUnlock: 'Tumcont LV2',
-    price: 25,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    price: 25, // Image shows $2
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '545-ps',
@@ -178,9 +179,9 @@ export const ammoData: AmmoType[] = [
     dispersion: 2,
     velocity: 880,
     traderUnlock: 'Tumcont LV2',
-    price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    price: 35, // Image shows 3$
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '545-pp',
@@ -190,8 +191,8 @@ export const ammoData: AmmoType[] = [
     velocity: 880,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 1, 'III+': 0 }, // Orange, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 1, 'III': 0, 'III+': 0 },
   },
   {
     id: '545-bt',
@@ -201,8 +202,8 @@ export const ammoData: AmmoType[] = [
     velocity: 880,
     traderUnlock: 'Tumcont LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 1, 'III+': 0 }, // Orange, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 1, 'III': 0, 'III+': 0 },
   },
   {
     id: '545-bp',
@@ -212,8 +213,8 @@ export const ammoData: AmmoType[] = [
     velocity: 840,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 2, 'III+': 1 }, // Yellow, Orange
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 2, 'III': 1, 'III+': 0 },
   },
   {
     id: '545-bs',
@@ -223,8 +224,8 @@ export const ammoData: AmmoType[] = [
     velocity: 840,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   // 5.56x45
   {
@@ -235,8 +236,8 @@ export const ammoData: AmmoType[] = [
     velocity: 930,
     traderUnlock: 'Gunny LV1',
     price: 15,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '556-hpbt',
@@ -246,8 +247,8 @@ export const ammoData: AmmoType[] = [
     velocity: 1040,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '556-fmj',
@@ -256,9 +257,9 @@ export const ammoData: AmmoType[] = [
     dispersion: 0,
     velocity: 880,
     traderUnlock: 'Gunny LV2',
-    price: 45,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 1, 'III+': 0 }, // Orange, Red
+    price: 45, // Image shows $4
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 1, 'III': 0, 'III+': 0 }, // Corrected based on image (Y,O,R,R)
   },
   {
     id: '556-m193',
@@ -268,8 +269,8 @@ export const ammoData: AmmoType[] = [
     velocity: 1006,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 1, 'III+': 0 }, // Orange, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 1, 'III': 0, 'III+': 0 },
   },
   {
     id: '556-m855',
@@ -279,8 +280,8 @@ export const ammoData: AmmoType[] = [
     velocity: 945,
     traderUnlock: 'Gunny LV3',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 2, 'III+': 1 }, // Yellow, Orange
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 2, 'III': 1, 'III+': 0 },
   },
   {
     id: '556-m856',
@@ -290,8 +291,8 @@ export const ammoData: AmmoType[] = [
     velocity: 916,
     traderUnlock: 'Gunny LV3',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 2, 'III+': 1 }, // Yellow, Orange
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 2, 'III': 1, 'III+': 0 },
   },
   {
     id: '556-m856a1',
@@ -301,8 +302,8 @@ export const ammoData: AmmoType[] = [
     velocity: 968,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   {
     id: '556-m855a1',
@@ -312,8 +313,8 @@ export const ammoData: AmmoType[] = [
     velocity: 970,
     traderUnlock: 'Gunny LV3',
     price: 55,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   // 7.62x39
   {
@@ -324,8 +325,8 @@ export const ammoData: AmmoType[] = [
     velocity: 743,
     traderUnlock: 'Artisan LV1',
     price: 15,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '762x39-us',
@@ -335,8 +336,8 @@ export const ammoData: AmmoType[] = [
     velocity: 310,
     traderUnlock: 'Artisan LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 1 }, // Green, Green, Green, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '762x39-tracer',
@@ -346,8 +347,8 @@ export const ammoData: AmmoType[] = [
     velocity: 725,
     traderUnlock: 'Artisan LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 1, 'III+': 0 }, // Orange, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 1, 'III': 0, 'III+': 0 },
   },
   {
     id: '762x39-ps',
@@ -357,8 +358,8 @@ export const ammoData: AmmoType[] = [
     velocity: 725,
     traderUnlock: 'Artisan LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 1, 'III+': 0 }, // Orange, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 1, 'III': 0, 'III+': 0 },
   },
   {
     id: '762x39-bp',
@@ -368,8 +369,8 @@ export const ammoData: AmmoType[] = [
     velocity: 725,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   // 7.62x51
   {
@@ -380,8 +381,8 @@ export const ammoData: AmmoType[] = [
     velocity: 838,
     traderUnlock: 'Banshee LV1',
     price: 25,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 2, 'III+': 1 }, // Yellow, Orange
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 2, 'IIIA+': 2, 'III': 1, 'III+': 0 },
   },
   {
     id: '762x51-m80a1',
@@ -391,8 +392,8 @@ export const ammoData: AmmoType[] = [
     velocity: 835,
     traderUnlock: 'Banshee LV3?',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   {
     id: '762x51-hpbt',
@@ -402,8 +403,8 @@ export const ammoData: AmmoType[] = [
     velocity: 800,
     traderUnlock: 'Banshee LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   {
     id: '762x51-m62',
@@ -413,8 +414,8 @@ export const ammoData: AmmoType[] = [
     velocity: 822,
     traderUnlock: 'Banshee LV3',
     price: 55,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 3 }, // Green, Green
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 3, 'III+': 2 },
   },
   {
     id: '762x51-m61',
@@ -424,8 +425,8 @@ export const ammoData: AmmoType[] = [
     velocity: 838,
     traderUnlock: 'Banshee LV3',
     price: 55,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 3 }, // Green, Green
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 3, 'III+': 2 },
   },
   // 7.62x54R
   {
@@ -436,8 +437,8 @@ export const ammoData: AmmoType[] = [
     velocity: 828,
     traderUnlock: 'Artisan LV1',
     price: 25,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   {
     id: '762x54r-tracer',
@@ -447,8 +448,8 @@ export const ammoData: AmmoType[] = [
     velocity: 830,
     traderUnlock: 'Artisan LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 2 }, // Green, Yellow
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 2, 'III+': 1 },
   },
   {
     id: '762x54r-sr',
@@ -458,8 +459,8 @@ export const ammoData: AmmoType[] = [
     velocity: 835,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 3 }, // Green, Green
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 3, 'III+': 2 },
   },
   {
     id: '762x54r-ap',
@@ -469,8 +470,8 @@ export const ammoData: AmmoType[] = [
     velocity: 828,
     traderUnlock: 'Found in AO',
     price: null,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 3 }, // Green, Green, Green, Green
-    bodyPenetration: { 'III': 3, 'III+': 3 }, // Green, Green
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 3, 'III+': 2 },
   },
   // 12 GAUGE
   {
@@ -481,8 +482,8 @@ export const ammoData: AmmoType[] = [
     velocity: 370,
     traderUnlock: 'Gunny LV1',
     price: 15,
-    helmPenetration: { 'IIA': 2, 'IIA+': 1, 'IIIA': 0, 'IIIA+': 0 }, // Yellow, Orange, Red, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 0, 'IIA': 0, 'IIA+': 0 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '12g-fc00buck',
@@ -492,8 +493,8 @@ export const ammoData: AmmoType[] = [
     velocity: 370,
     traderUnlock: 'Gunny LV2',
     price: 35,
-    helmPenetration: { 'IIA': 2, 'IIA+': 1, 'IIIA': 0, 'IIIA+': 0 }, // Yellow, Orange, Red, Red
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 0, 'IIA': 0, 'IIA+': 0 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '12g-12gslug',
@@ -503,8 +504,8 @@ export const ammoData: AmmoType[] = [
     velocity: 420,
     traderUnlock: 'Gunny LV2',
     price: 25,
-    helmPenetration: { 'IIA': 3, 'IIA+': 2, 'IIIA': 2, 'IIIA+': 1 }, // Green, Yellow, Yellow, Orange
-    bodyPenetration: { 'III': 0, 'III+': 0 }, // Red, Red
+    helmPenetration: { 'I': 2, 'IIA': 2, 'IIA+': 1 },
+    bodyPenetration: { 'IIIA': 0, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
   {
     id: '12g-sstsabotslug',
@@ -514,8 +515,8 @@ export const ammoData: AmmoType[] = [
     velocity: 542,
     traderUnlock: 'Gunny LV2',
     price: 35,
-    helmPenetration: { 'IIA': 3, 'IIA+': 3, 'IIIA': 3, 'IIIA+': 2 }, // Green, Green, Green, Yellow
-    bodyPenetration: { 'III': 1, 'III+': 0 }, // Orange, Red
+    helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 2 },
+    bodyPenetration: { 'IIIA': 1, 'IIIA+': 0, 'III': 0, 'III+': 0 },
   },
 ];
 
