@@ -32,32 +32,31 @@ const AmmoDetail: React.FC = () => {
 
   const calculateScores = (ammoData: AmmoType) => {
     const caliberAmmo = getAmmoByCalibrer(ammoData.caliber);
-    const velocities = caliberAmmo.map(a => a.velocity).filter(v => v > 0); // Filter out 0 velocity
-    const maxVelocity = velocities.length > 0 ? Math.max(...velocities) : 1; // Avoid division by zero
-    const dispersions = caliberAmmo.map(a => a.dispersion);
-    const maxDispersion = Math.max(...dispersions, 6);
-    const minDispersion = Math.min(...dispersions, -2);
-    const dispersionRange = maxDispersion - minDispersion;
-    const normalizedDispersion = dispersionRange > 0 ? (ammoData.dispersion - minDispersion) / dispersionRange : 0.5; // Avoid division by zero
-    const invertedDispersion = 1 - normalizedDispersion;
+    const velocities = caliberAmmo.map(a => a.velocity).filter(v => v > 0);
+    const maxVelocity = velocities.length > 0 ? Math.max(...velocities) : 1;
 
     const velocityFactor = maxVelocity > 0 ? ammoData.velocity / maxVelocity : 0;
 
-    const unArmoredScore = Math.round(
-      (velocityFactor * 0.7 + invertedDispersion * 0.3) * 100
-    );
+    // Base unarmored score - Check if Helmet I or Body IIIA penetration is high (value of 3)
+    let unArmoredScore;
+    if (ammoData.helmPenetration['I'] === 3 || ammoData.bodyPenetration['IIIA'] === 3) {
+      unArmoredScore = 100; // 100% effective against unarmored if high penetration on base armor levels
+    } else {
+      unArmoredScore = Math.round(velocityFactor * 100);
+    }
 
-    // Light armor score based on Helm I, IIA, IIA+
+    // Calculate penetration factors (0 to 1)
     const lightArmorPen = ammoData.helmPenetration['I'] + ammoData.helmPenetration['IIA'] + ammoData.helmPenetration['IIA+'];
-    const lightArmorScore = Math.round(
-      ((lightArmorPen / 9) * 0.8 + velocityFactor * 0.2) * 100
-    );
+    const maxLightArmorPen = 9; // 3 levels * 3 max pen value
+    const penetrationFactorLight = lightArmorPen / maxLightArmorPen;
 
-    // Heavy armor score based on Body IIIA, IIIA+, III, III+
     const heavyArmorPen = ammoData.bodyPenetration['IIIA'] + ammoData.bodyPenetration['IIIA+'] + ammoData.bodyPenetration['III'] + ammoData.bodyPenetration['III+'];
-    const heavyArmorScore = Math.round(
-      ((heavyArmorPen / 12) * 0.8 + velocityFactor * 0.2) * 100
-    );
+    const maxHeavyArmorPen = 12; // 4 levels * 3 max pen value
+    const penetrationFactorHeavy = heavyArmorPen / maxHeavyArmorPen;
+
+    // Armored scores are the unarmored score modified by the penetration factor.
+    const lightArmorScore = Math.round(unArmoredScore * penetrationFactorLight);
+    const heavyArmorScore = Math.round(unArmoredScore * penetrationFactorHeavy);
 
     return { unArmoredScore, lightArmorScore, heavyArmorScore };
   };
@@ -75,7 +74,7 @@ const AmmoDetail: React.FC = () => {
     } else if (ammoData.velocity > 0 && ammoData.velocity < 350) {
       description += ` Its lower velocity (${ammoData.velocity} m/s) might reduce effectiveness at extended distances.`;
     } else if (ammoData.velocity === 0) {
-        description += ` Its velocity is unknown, affecting range performance predictability.`;
+      description += ` Its velocity is unknown, affecting range performance predictability.`;
     }
     if (ammoData.dispersion < 0) {
       description += ` The reduced dispersion (${ammoData.dispersion}%) significantly enhances accuracy.`;
@@ -85,20 +84,18 @@ const AmmoDetail: React.FC = () => {
     return description;
   };
 
-  // Use more distinct gradient colors for effectiveness bars
   const getEffectivenessColor = (score: number) => {
     if (score >= 70) return 'bg-gradient-to-r from-emerald-500 to-green-500';
     if (score >= 40) return 'bg-gradient-to-r from-amber-500 to-yellow-500';
     return 'bg-gradient-to-r from-rose-600 to-red-600';
   };
 
-  // Penetration colors based on the image legend (Red, Orange, Yellow, Green)
   const getPenetrationColorClass = (level: PenetrationValue): string => {
     switch (level) {
-      case 0: return 'bg-red-600';    // No penetration (Red)
-      case 1: return 'bg-orange-500'; // Low penetration (Orange)
-      case 2: return 'bg-yellow-500'; // Medium penetration (Yellow)
-      case 3: return 'bg-green-500';  // High penetration (Green)
+      case 0: return 'bg-red-600';
+      case 1: return 'bg-orange-500';
+      case 2: return 'bg-yellow-500';
+      case 3: return 'bg-green-500';
       default: return 'bg-gray-700';
     }
   };
@@ -106,7 +103,6 @@ const AmmoDetail: React.FC = () => {
   if (!ammo) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Enhanced Loading Skeleton */}
         <div className="animate-pulse space-y-8">
           <div className="h-8 bg-secondary/30 rounded w-1/3"></div>
           <div className="h-4 bg-secondary/30 rounded w-1/2"></div>
@@ -119,10 +115,9 @@ const AmmoDetail: React.FC = () => {
     );
   }
 
-  // Updated armor level definitions
   const helmArmorLevels: ('I' | 'IIA' | 'IIA+')[] = ['I', 'IIA', 'IIA+'];
   const bodyArmorLevels: ('IIIA' | 'IIIA+' | 'III' | 'III+')[] = ['IIIA', 'IIIA+', 'III', 'III+'];
-  const allArmorLevels: ('I' | 'IIA' | 'IIA+' | 'IIIA' | 'IIIA+' | 'III' | 'III+')[] = [...helmArmorLevels, ...bodyArmorLevels]; // Combined for header
+  const allArmorLevels: ('I' | 'IIA' | 'IIA+' | 'IIIA' | 'IIIA+' | 'III' | 'III+')[] = [...helmArmorLevels, ...bodyArmorLevels];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -157,7 +152,7 @@ const AmmoDetail: React.FC = () => {
               <div>
                 <h2 className="text-2xl font-semibold mb-4 text-text/90">Ammunition Stats</h2>
                 <div className="grid grid-cols-2 gap-4">
-                  {[ // Added key prop
+                  {[
                     { key: 'velocity', label: 'Velocity', value: `${ammo.velocity}`, unit: 'm/s', colorClass: 'text-sky-300' },
                     { key: 'dispersion', label: 'Dispersion', value: `${ammo.dispersion > 0 ? '+' : ''}${ammo.dispersion}`, unit: '%', colorClass: ammo.dispersion < 0 ? 'text-emerald-400' : ammo.dispersion > 0 ? 'text-amber-400' : 'text-text/80' },
                     { key: 'trader', label: 'Trader', value: ammo.traderUnlock, unit: '', colorClass: 'text-text/80' },
@@ -177,7 +172,7 @@ const AmmoDetail: React.FC = () => {
               <div>
                 <h3 className="text-lg font-semibold mb-3 text-text/90">Penetration Legend</h3>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 bg-primary/30 rounded-lg p-4 shadow-sm">
-                  {[ // Updated legend colors to match image
+                  {[
                     { color: 'bg-red-600', label: 'No penetration' },
                     { color: 'bg-orange-500', label: 'Low penetration' },
                     { color: 'bg-yellow-500', label: 'Medium penetration' },
@@ -201,7 +196,7 @@ const AmmoDetail: React.FC = () => {
                 <div className='bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]'>
                   <h3 className="text-lg font-semibold mb-3 text-text/90">Combat Effectiveness</h3>
                   <div className="grid grid-cols-3 gap-3">
-                    {[ // Updated labels for clarity
+                    {[
                       { label: 'vs. Unarmored', score: effectivenessScores.unArmoredScore },
                       { label: 'vs. Light Armor', score: effectivenessScores.lightArmorScore },
                       { label: 'vs. Heavy Armor', score: effectivenessScores.heavyArmorScore },
@@ -220,36 +215,31 @@ const AmmoDetail: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Unified Penetration Grid - Updated Structure */}
+                {/* Unified Penetration Grid */}
                 <div className='bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]'>
                   <h3 className="text-lg font-semibold mb-3 text-text/90">Armor Penetration Profile</h3>
-                  <div className="grid grid-cols-[auto_repeat(7,_minmax(0,_1fr))] gap-1 bg-secondary/50 p-2 rounded-lg shadow-sm"> {/* Adjusted grid columns */}
-                    {/* Header Row - Updated Levels */}
-                    <div className="text-center text-xs font-medium text-muted"></div> {/* Corner */}
+                  <div className="grid grid-cols-[auto_repeat(7,_minmax(0,_1fr))] gap-1 bg-secondary/50 p-2 rounded-lg shadow-sm">
+                    <div className="text-center text-xs font-medium text-muted"></div>
                     {allArmorLevels.map(level => (
                       <div key={level} className="text-center text-xs font-medium text-muted/70 py-1">{level}</div>
                     ))}
 
-                    {/* Helmet Row - Updated Mapping & Placeholders */}
                     <div className="flex items-center justify-center">
-                      <span className="text-xs font-medium text-muted/70 transform -rotate-90 whitespace-nowrap py-2">Helmet</span>
+                      <span className="text-xs font-medium text-muted/70 transform -rotate-90 whitespace-nowrap py-4">Helmet</span>
                     </div>
                     {helmArmorLevels.map(level => (
                       <div key={`helm-${level}`} title={`Helmet ${level}: ${ammo.helmPenetration[level]}`} className={`h-full min-h-[32px] rounded ${getPenetrationColorClass(ammo.helmPenetration[level])} border border-black/10 shadow-inner transition-transform duration-150 hover:scale-110 hover:z-10 relative`}>
                       </div>
                     ))}
-                    {/* Placeholders for body armor columns in helmet row */}
                     {bodyArmorLevels.map(level => (
-                        <div key={`helm-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
+                      <div key={`helm-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
                     ))}
 
-                    {/* Body Row - Updated Mapping & Placeholders */}
                     <div className="flex items-center justify-center">
-                      <span className="text-xs font-medium text-muted/70 transform -rotate-90 whitespace-nowrap py-2">Body</span>
+                      <span className="text-xs font-medium text-muted/70 transform -rotate-90 whitespace-nowrap py-4">Body</span>
                     </div>
-                    {/* Placeholders for helmet armor columns in body row */}
                     {helmArmorLevels.map(level => (
-                        <div key={`body-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
+                      <div key={`body-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
                     ))}
                     {bodyArmorLevels.map(level => (
                       <div key={`body-${level}`} title={`Body ${level}: ${ammo.bodyPenetration[level]}`} className={`h-full min-h-[32px] rounded ${getPenetrationColorClass(ammo.bodyPenetration[level])} border border-black/10 shadow-inner transition-transform duration-150 hover:scale-110 hover:z-10 relative`}>
@@ -257,7 +247,7 @@ const AmmoDetail: React.FC = () => {
                     ))}
                   </div>
                   <div className="mt-1.5 text-xs text-muted/70 text-right">
-                    <p>* Grayed cells indicate armor types not applicable to this row (Helmet/Body)</p> {/* Updated note */}
+                    <p>* Grayed cells indicate armor types not applicable to this row (Helmet/Body)</p>
                   </div>
                 </div>
 
@@ -283,7 +273,7 @@ const AmmoDetail: React.FC = () => {
                       >
                         <h4 className="font-semibold text-text/90 truncate text-sm mb-0.5">{item.name}</h4>
                         <p className="text-xs text-sky-300">Velocity: {item.velocity} m/s</p>
-                        <p className={`text-xs ${item.dispersion < 0 ? 'text-emerald-400' : item.dispersion > 0 ? 'text-amber-400' : 'text-muted/70'}`}> {/* Fixed template literal */}
+                        <p className={`text-xs ${item.dispersion < 0 ? 'text-emerald-400' : item.dispersion > 0 ? 'text-amber-400' : 'text-muted/70'}`}>
                           Dispersion: {item.dispersion > 0 ? `+${item.dispersion}` : item.dispersion}%
                         </p>
                       </Link>

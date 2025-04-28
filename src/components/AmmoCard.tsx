@@ -1,15 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AmmoType, penetrationColorClass } from '../data/ammoData';
+import { AmmoType, penetrationColorClass, ArmorLevel, PenetrationValue } from '../data/ammoData';
 
 interface AmmoCardProps {
   ammo: AmmoType;
   detailed?: boolean;
 }
 
+// Define the specific armor levels for helmet and body
+const HELMET_ARMOR_LEVELS: Extract<ArmorLevel, 'I' | 'IIA' | 'IIA+'>[] = ['I', 'IIA', 'IIA+'];
+const BODY_ARMOR_LEVELS: Extract<ArmorLevel, 'IIIA' | 'IIIA+' | 'III' | 'III+'>[] = ['IIIA', 'IIIA+', 'III', 'III+'];
+
 const AmmoCard: React.FC<AmmoCardProps> = ({ ammo, detailed = false }) => {
-  const helmArmorLevels: ('IIA' | 'IIA+' | 'IIIA' | 'IIIA+')[] = ['IIA', 'IIA+', 'IIIA', 'IIIA+'];
-  const bodyArmorLevels: ('III' | 'III+')[] = ['III', 'III+'];
+
+  // Correct the type for penetrationData to use PenetrationValue
+  const renderPenetrationGrid = (levels: ArmorLevel[], penetrationData: { [key in ArmorLevel]?: PenetrationValue }, label: string, cols: number) => (
+    <div className="mb-3">
+      <h5 className="text-xs text-muted mb-1 font-semibold">{label}</h5>
+      <div className={`grid grid-cols-${cols} gap-1`}>
+        {levels.map((level) => (
+          <div key={level} className="text-center">
+            <div className="text-[10px] text-muted mb-0.5">{level}</div>
+            {/* The nullish coalescing operator now correctly results in PenetrationValue */}
+            <div className={`h-3 w-full rounded ${penetrationColorClass(penetrationData[level] ?? 0)}`}></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   const cardContent = (
     <div className="bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] h-full flex flex-col">
@@ -19,7 +37,6 @@ const AmmoCard: React.FC<AmmoCardProps> = ({ ammo, detailed = false }) => {
             <span className="mr-2">{ammo.name}</span>
             <span className="text-xs font-normal text-muted">{ammo.caliber}</span>
           </h3>
-          {/* Removed the explicit Details link */}
         </div>
 
         <div className="grid grid-cols-2 gap-x-6 gap-y-2 mb-4">
@@ -43,60 +60,18 @@ const AmmoCard: React.FC<AmmoCardProps> = ({ ammo, detailed = false }) => {
           </div>
         </div>
 
-        {detailed && (
-          <div className="mt-4">
-            <h4 className="text-sm font-medium text-muted mb-2">Penetration Values</h4>
+        {/* Penetration Section */}
+        <div className="mt-3">
+          <h3 className="text-md font-medium text-muted mb-4">Penetration</h3>
+          {renderPenetrationGrid(HELMET_ARMOR_LEVELS, ammo.helmPenetration, 'Helmet', 3)}
+          {renderPenetrationGrid(BODY_ARMOR_LEVELS, ammo.bodyPenetration, 'Body', 4)}
+        </div>
 
-            <div className="mb-3">
-              <h5 className="text-xs text-muted mb-1">Helmet Armor</h5>
-              <div className="grid grid-cols-4 gap-1">
-                {helmArmorLevels.map((level) => (
-                  <div key={level} className="text-center">
-                    <div className="text-xs text-muted mb-1">{level}</div>
-                    <div className={`h-4 w-full rounded ${penetrationColorClass(ammo.helmPenetration[level])}`}></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h5 className="text-xs text-muted mb-1">Body Armor</h5>
-              <div className="grid grid-cols-2 gap-1">
-                {bodyArmorLevels.map((level) => (
-                  <div key={level} className="text-center">
-                    <div className="text-xs text-muted mb-1">{level}</div>
-                    <div className={`h-4 w-full rounded ${penetrationColorClass(ammo.bodyPenetration[level])}`}></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {!detailed && (
-          <div className="mt-3">
-            <h4 className="text-xs text-muted mb-1">Penetration</h4>
-            <div className="grid grid-cols-6 gap-1">
-              {helmArmorLevels.map((level) => (
-                <div key={level} className="text-center">
-                  <div className="text-xs text-muted mb-1">{level}</div>
-                  <div className={`h-3 w-full rounded ${penetrationColorClass(ammo.helmPenetration[level])}`}></div>
-                </div>
-              ))}
-              {bodyArmorLevels.map((level) => (
-                <div key={level} className="text-center">
-                  <div className="text-xs text-muted mb-1">{level}</div>
-                  <div className={`h-3 w-full rounded ${penetrationColorClass(ammo.bodyPenetration[level])}`}></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
 
-  // If detailed view, don't wrap in a link
+  // If detailed view, don't wrap in a link (assuming detailed view might exist later)
   if (detailed) {
     return cardContent;
   }

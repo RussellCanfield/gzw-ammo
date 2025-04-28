@@ -1,0 +1,20 @@
+# Armor types
+
+## Helmet
+3 armor levels: I, IIA, IIA+
+
+## Body
+4 armor levels: IIIA, IIIA+, III, III+
+
+# Ammo Penetration Color Codes
+
+There are two types of armor with different penetration values for each type: Helmet and armor.
+
+Color codes in photos are represented left to right in the following way:
+Helmet I, Helmet IIA, Helmet IIA+, Body IIIA, Body IIIA+, Body III, Body III+
+
+## Color Codes for penetration
+Red = no penetration
+Orange = low penetration (light bruise/bleed)
+Yellow = medium penetration (medium bruise/bleed)
+Green = high prenetration (1 Tap/Insta Kill)
