@@ -13,15 +13,29 @@ const BODY_ARMOR_LEVELS: Extract<ArmorLevel, 'IIIA' | 'IIIA+' | 'III' | 'III+'>[
 
 const AmmoCard: React.FC<AmmoCardProps> = ({ ammo, detailed = false }) => {
 
-  // Correct the type for penetrationData to use PenetrationValue
-  const renderPenetrationGrid = (levels: ArmorLevel[], penetrationData: { [key in ArmorLevel]?: PenetrationValue }, label: string, cols: number) => (
+  // Render helmet penetration grid (3 columns)
+  const renderHelmetPenetrationGrid = (penetrationData: { [key in ArmorLevel]?: PenetrationValue }) => (
     <div className="mb-3">
-      <h5 className="text-xs text-muted mb-1 font-semibold">{label}</h5>
-      <div className={`grid grid-cols-${cols} gap-1`}>
-        {levels.map((level) => (
+      <h5 className="text-xs text-muted mb-1 font-semibold">Helmet</h5>
+      <div className="grid grid-cols-3 gap-1">
+        {HELMET_ARMOR_LEVELS.map((level) => (
           <div key={level} className="text-center">
             <div className="text-[10px] text-muted mb-0.5">{level}</div>
-            {/* The nullish coalescing operator now correctly results in PenetrationValue */}
+            <div className={`h-3 w-full rounded ${penetrationColorClass(penetrationData[level] ?? 0)}`}></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Render body penetration grid (4 columns)
+  const renderBodyPenetrationGrid = (penetrationData: { [key in ArmorLevel]?: PenetrationValue }) => (
+    <div className="mb-3">
+      <h5 className="text-xs text-muted mb-1 font-semibold">Body</h5>
+      <div className="grid grid-cols-4 gap-1">
+        {BODY_ARMOR_LEVELS.map((level) => (
+          <div key={level} className="text-center">
+            <div className="text-[10px] text-muted mb-0.5">{level}</div>
             <div className={`h-3 w-full rounded ${penetrationColorClass(penetrationData[level] ?? 0)}`}></div>
           </div>
         ))}
@@ -63,8 +77,8 @@ const AmmoCard: React.FC<AmmoCardProps> = ({ ammo, detailed = false }) => {
         {/* Penetration Section */}
         <div className="mt-3">
           <h3 className="text-md font-medium text-muted mb-4">Penetration</h3>
-          {renderPenetrationGrid(HELMET_ARMOR_LEVELS, ammo.helmPenetration, 'Helmet', 3)}
-          {renderPenetrationGrid(BODY_ARMOR_LEVELS, ammo.bodyPenetration, 'Body', 4)}
+          {renderHelmetPenetrationGrid(ammo.helmPenetration)}
+          {renderBodyPenetrationGrid(ammo.bodyPenetration)}
         </div>
 
       </div>

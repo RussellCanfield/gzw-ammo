@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getAmmoById, getAmmoByCalibrer, AmmoType, PenetrationValue } from '../data/ammoData';
+import helmetIcon from '../assets/helmet.webp';
+import plateIcon from '../assets/plate.webp';
 
 const AmmoDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -225,7 +227,12 @@ const AmmoDetail: React.FC = () => {
                     ))}
 
                     <div className="flex items-center justify-center">
-                      <span className="text-xs font-medium text-muted/70 transform -rotate-90 whitespace-nowrap py-4">Helmet</span>
+                      <img
+                        src={helmetIcon}
+                        alt="Helmet"
+                        className="w-12 h-12 object-contain"
+                        title="Helmet"
+                      />
                     </div>
                     {helmArmorLevels.map(level => (
                       <div key={`helm-${level}`} title={`Helmet ${level}: ${ammo.helmPenetration[level]}`} className={`h-full min-h-[32px] rounded ${getPenetrationColorClass(ammo.helmPenetration[level])} border border-black/10 shadow-inner transition-transform duration-150 hover:scale-110 hover:z-10 relative`}>
@@ -236,7 +243,12 @@ const AmmoDetail: React.FC = () => {
                     ))}
 
                     <div className="flex items-center justify-center">
-                      <span className="text-xs font-medium text-muted/70 transform -rotate-90 whitespace-nowrap py-4">Body</span>
+                      <img
+                        src={plateIcon}
+                        alt="Body Armor"
+                        className="w-12 h-12 object-contain"
+                        title="Body Armor"
+                      />
                     </div>
                     {helmArmorLevels.map(level => (
                       <div key={`body-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
@@ -247,7 +259,12 @@ const AmmoDetail: React.FC = () => {
                     ))}
                   </div>
                   <div className="mt-1.5 text-xs text-muted/70 text-right">
-                    <p>* Grayed cells indicate armor types not applicable to this row (Helmet/Body)</p>
+                    <p className="flex items-center justify-end gap-1">
+                      * Grayed cells indicate armor types not applicable to this row
+                      (<img src={helmetIcon} alt="Helmet" className="w-3 h-3 inline object-contain" />
+                      /
+                      <img src={plateIcon} alt="Body Armor" className="w-3 h-3 inline object-contain" />)
+                    </p>
                   </div>
                 </div>
 

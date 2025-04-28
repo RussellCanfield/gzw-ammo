@@ -281,7 +281,7 @@ export const ammoData: AmmoType[] = [
     traderUnlock: 'Gunny LV3',
     price: 35,
     helmPenetration: { 'I': 3, 'IIA': 3, 'IIA+': 3 },
-    bodyPenetration: { 'IIIA': 2, 'IIIA+': 2, 'III': 1, 'III+': 0 },
+    bodyPenetration: { 'IIIA': 3, 'IIIA+': 3, 'III': 3, 'III+': 2 },
   },
   {
     id: '556-m856',
