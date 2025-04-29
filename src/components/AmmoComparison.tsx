@@ -94,7 +94,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
 
   return (
     <div className="overflow-hidden">
-      <div className="p-6">
+      <div className="p-2 sm:p-4">
         <div className="bg-primary/50 rounded-lg p-4 shadow-inner mb-6">
           <label className="block text-sm font-medium text-muted mb-2">
             Select Ammunition Types to Compare
