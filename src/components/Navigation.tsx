@@ -5,6 +5,7 @@ import logo from '../assets/GZW-LOGO-W.png';
 const navigation = [
   { name: 'Ammunition', href: '/' },
   { name: 'Compare', href: '/compare' },
+  { name: 'Discussions', href: 'https://www.grayzonewarfare.net/forums/ammo-ballistics.14/' }
 ];
 
 export default function Navigation() {
@@ -14,27 +15,25 @@ export default function Navigation() {
     <Disclosure as="nav" className="bg-secondary shadow-lg sticky top-0 z-50">
       {() => (
         <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-8">
             <div className="flex h-16 justify-between">
-              <div className="flex">
-                <div className="flex flex-shrink-0 items-center">
-                  <Link to="/" className="text-xl font-bold text-text flex gap-2 items-center group">
-                    <div className="relative overflow-hidden rounded-full p-1 bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                      <img src={logo} alt="Logo" className="h-8 w-8" />
-                      <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full"></div>
-                    </div>
-                    <span className="bg-gradient-to-r from-text to-muted bg-clip-text text-transparent font-extrabold text-white">
-                      Ammo Analyzer
-                    </span>
-                  </Link>
+              <div className="flex w-full mt-4 items-center justify-between flex-col gap-4 mb-4">
+                <div className="flex flex-shrink-0 items-center mx-auto sm:mx-0">
+                  <div className="relative overflow-hidden rounded-full p-1 bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                    <img src={logo} alt="Logo" className="h-8 w-8" />
+                    <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full"></div>
+                  </div>
+                  <span className="bg-gradient-to-r from-text to-muted bg-clip-text text-transparent font-extrabold text-white">
+                    Ammo Analyzer
+                  </span>
                 </div>
-                <div className="hidden sm:ml-8 sm:flex sm:space-x-8 items-center">
+                <div className="sm:ml-8 sm:flex sm:space-x-8 items-center">
                   {navigation.map((item) => {
                     const current = location.pathname === item.href;
                     return (
                       <Link
                         key={item.name}
-                        to={item.href}
+                        to={item.href as string}
                         className={`inline-flex items-center px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${current
                           ? 'bg-accent/10 text-text border-b-2 border-accent'
                           : 'text-muted hover:text-text hover:bg-accent/5'
@@ -58,14 +57,14 @@ export default function Navigation() {
             leaveTo="transform scale-95 opacity-0"
           >
             <Disclosure.Panel className="sm:hidden">
-              <div className="space-y-1 pb-3 pt-2 px-4">
+              <div className="space-y-1 pb-3 pt-2 px-4 flex flex-col items-center">
                 {navigation.map((item) => {
                   const current = location.pathname === item.href;
                   return (
                     <Link
                       key={item.name}
-                      to={item.href}
-                      className={`block w-full text-left rounded-md px-3 py-2 text-base font-medium transition-all duration-200 ${current
+                      to={item.href as string}
+                      className={`block w-full text-center rounded-md px-3 py-2 text-base font-medium transition-all duration-200 ${current
                         ? 'bg-accent/10 text-text border-l-2 border-accent'
                         : 'text-muted hover:text-text hover:bg-accent/5'
                         }`}
@@ -81,7 +80,7 @@ export default function Navigation() {
                     </Link>
                   );
                 })}
-                <div className="pt-4 pb-2 border-t border-gray-700">
+                <div className="pt-4 pb-2 border-t border-gray-700 w-full">
                   <div className="flex items-center justify-center space-x-6 mt-3">
                     <a
                       href="https://gzw.madfinger.com/"

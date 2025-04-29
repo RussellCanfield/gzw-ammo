@@ -46,9 +46,6 @@ const Compare: React.FC = () => {
             <path d="M12 9v6"></path>
           </svg>
         </h1>
-        <p className="text-muted text-lg">
-          Select ammunition types to compare their performance and penetration capabilities
-        </p>
       </div>
 
       <div className="bg-secondary rounded-lg shadow-lg overflow-hidden mb-4 p-2 md:p-6">
