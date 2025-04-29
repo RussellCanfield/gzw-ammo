@@ -36,18 +36,6 @@ const Compare: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="bg-gradient-to-r from-secondary to-secondary/50 sm:p-4 p-2 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold text-text flex items-center">
-          <span className="mr-2">Compare Ammunition</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-            <path d="M9 12h6"></path>
-            <path d="M12 9v6"></path>
-          </svg>
-        </h1>
-      </div>
-
       <div className="bg-secondary rounded-lg shadow-lg overflow-hidden mb-4 p-2 md:p-4">
         <div className="mb-4">
           <label htmlFor="caliber-select" className="block text-sm font-medium text-muted mb-1">
