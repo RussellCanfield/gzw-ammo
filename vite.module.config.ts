@@ -7,7 +7,7 @@ import { dependencies } from './package.json';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? 'https://gzw-ammo-analyzer.pages.dev/module' : '',
+  base: process.env.NODE_ENV === 'production' ? 'https://gzw-ammo-analyzer-remote.pages.dev/module' : '',
   plugins: [
     react(),
     tailwindcss(),
@@ -32,8 +32,8 @@ export default defineConfig({
   ],
   build: {
     target: 'chrome89',
-    outDir: 'dist/module',
-    emptyOutDir: false,
+    outDir: 'dist-module',
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         app: resolve(__dirname, 'src/App.tsx'),
