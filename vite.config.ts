@@ -18,7 +18,7 @@ export default defineConfig({
         ammo_analyzer: {
           type: "module",
           name: 'ammo_analyzer',
-          entry: 'https://gzw-ammo-analyzer-remote.pages.dev/module/remoteEntry.js',
+          entry: 'https://gzw-ammo-analyzer-remote.pages.dev/remoteEntry.js',
           entryGlobalName: "ammo_analyzer",
           shareScope: "default",
         }

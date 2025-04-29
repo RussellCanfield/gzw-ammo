@@ -7,7 +7,7 @@ import { dependencies } from './package.json';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? 'https://gzw-ammo-analyzer-remote.pages.dev/module' : '',
+  base: process.env.NODE_ENV === 'production' ? 'https://gzw-ammo-analyzer-remote.pages.dev/' : '',
   plugins: [
     react(),
     tailwindcss(),
