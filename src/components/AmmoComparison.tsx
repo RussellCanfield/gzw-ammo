@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AmmoType, getAmmoByCalibrer, penetrationColorClass, penetrationLevelText } from '../data/ammoData';
+import { AmmoType, getAmmoByCalibrer, penetrationColorClass, penetrationLevelText, HELMET_ARMOR_LEVELS, BODY_ARMOR_LEVELS } from '../data/ammoData';
 import {
   BarChart,
   Bar,
@@ -50,9 +50,6 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
     velocity: ammo.velocity,
     dispersion: ammo.dispersion,
   }));
-
-  const helmArmorLevels: ('I' | 'IIA' | 'IIA+')[] = ['I', 'IIA', 'IIA+'];
-  const bodyArmorLevels: ('IIIA' | 'IIIA+' | 'III' | 'III+')[] = ['IIIA', 'IIIA+', 'III', 'III+'];
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -237,12 +234,12 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
                         <th className="px-4 py-2 text-left text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700">
 
                         </th>
-                        {helmArmorLevels.map(level => (
+                        {HELMET_ARMOR_LEVELS.map(level => (
                           <th key={level} className="px-3 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l border-gray-700">
                             {level}
                           </th>
                         ))}
-                        {bodyArmorLevels.map(level => (
+                        {BODY_ARMOR_LEVELS.map(level => (
                           <th key={level} className="px-3 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l border-gray-700">
                             {level}
                           </th>
@@ -255,7 +252,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
                           <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-text border-r border-gray-700">
                             {ammo.name}
                           </td>
-                          {helmArmorLevels.map(level => (
+                          {HELMET_ARMOR_LEVELS.map(level => (
                             <td key={`${ammo.id}-${level}`} className="px-3 py-3 whitespace-nowrap text-sm text-text text-center border-r border-gray-700">
                               <div className="flex flex-col items-center">
                                 <div className={`h-6 w-6 rounded-full ${penetrationColorClass(ammo.helmPenetration[level])} shadow-lg`}></div>
@@ -263,7 +260,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
                               </div>
                             </td>
                           ))}
-                          {bodyArmorLevels.map(level => (
+                          {BODY_ARMOR_LEVELS.map(level => (
                             <td key={`${ammo.id}-${level}`} className="px-3 py-3 whitespace-nowrap text-sm text-text text-center border-r border-gray-700">
                               <div className="flex flex-col items-center">
                                 <div className={`h-6 w-6 rounded-full ${penetrationColorClass(ammo.bodyPenetration[level])} shadow-lg`}></div>
@@ -333,8 +330,8 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
                     <div className="mt-4 pt-3 border-t border-gray-700">
                       <div className="text-xs text-muted mb-1">Penetration Effectiveness</div>
                       <div className="flex space-x-1">
-                        {[...helmArmorLevels, ...bodyArmorLevels].map((level) => {
-                          const penValue = helmArmorLevels.includes(level as any)
+                        {[...HELMET_ARMOR_LEVELS, ...BODY_ARMOR_LEVELS].map((level) => {
+                          const penValue = HELMET_ARMOR_LEVELS.includes(level as any)
                             ? ammo.helmPenetration[level as 'I' | 'IIA' | 'IIA+']
                             : ammo.bodyPenetration[level as 'IIIA' | 'IIIA+' | 'III' | 'III+'];
 

@@ -1,4 +1,4 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getAllCalibers, getAmmoByCalibrer, AmmoType } from '../data/ammoData';
 import AmmoCard from '../components/AmmoCard';
@@ -173,10 +173,10 @@ const Ammunition: React.FC = () => {
           <h3 className="text-lg font-semibold mb-3 text-text/90">Penetration Legend</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 bg-primary/30 rounded-lg p-4 shadow-sm">
             {[
-              { color: 'bg-red-600', label: 'No penetration' },
-              { color: 'bg-orange-500', label: 'Low penetration' },
-              { color: 'bg-yellow-500', label: 'Medium penetration' },
-              { color: 'bg-green-500', label: 'High penetration' },
+              { color: 'bg-green-500', label: 'No penetration' },
+              { color: 'bg-yellow-500', label: 'Low penetration' },
+              { color: 'bg-orange-500', label: 'Medium penetration' },
+              { color: 'bg-red-600', label: 'High penetration' },
             ].map(item => (
               <div key={item.label} className="flex items-center">
                 <div className={`h-3 w-3 rounded-sm ${item.color} mr-2 shadow-sm`}></div>

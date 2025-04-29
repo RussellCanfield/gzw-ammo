@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AmmoType, penetrationColorClass, ArmorLevel, PenetrationValue } from '../data/ammoData';
+import { AmmoType, penetrationColorClass, ArmorLevel, PenetrationValue, HELMET_ARMOR_LEVELS, BODY_ARMOR_LEVELS } from '../data/ammoData';
 
 interface AmmoCardProps {
   ammo: AmmoType;
   detailed?: boolean;
 }
-
-// Define the specific armor levels for helmet and body
-const HELMET_ARMOR_LEVELS: Extract<ArmorLevel, 'I' | 'IIA' | 'IIA+'>[] = ['I', 'IIA', 'IIA+'];
-const BODY_ARMOR_LEVELS: Extract<ArmorLevel, 'IIIA' | 'IIIA+' | 'III' | 'III+'>[] = ['IIIA', 'IIIA+', 'III', 'III+'];
 
 const AmmoCard: React.FC<AmmoCardProps> = ({ ammo, detailed = false }) => {
 

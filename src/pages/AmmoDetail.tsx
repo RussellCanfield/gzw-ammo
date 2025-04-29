@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getAmmoById, getAmmoByCalibrer, AmmoType, PenetrationValue } from '../data/ammoData';
+import { getAmmoById, getAmmoByCalibrer, AmmoType, PenetrationValue, HELMET_ARMOR_LEVELS, BODY_ARMOR_LEVELS } from '../data/ammoData';
 import helmetIcon from '../assets/helmet.webp';
 import plateIcon from '../assets/plate.webp';
 
@@ -117,9 +117,7 @@ const AmmoDetail: React.FC = () => {
     );
   }
 
-  const helmArmorLevels: ('I' | 'IIA' | 'IIA+')[] = ['I', 'IIA', 'IIA+'];
-  const bodyArmorLevels: ('IIIA' | 'IIIA+' | 'III' | 'III+')[] = ['IIIA', 'IIIA+', 'III', 'III+'];
-  const allArmorLevels: ('I' | 'IIA' | 'IIA+' | 'IIIA' | 'IIIA+' | 'III' | 'III+')[] = [...helmArmorLevels, ...bodyArmorLevels];
+  const allArmorLevels = [...HELMET_ARMOR_LEVELS, ...BODY_ARMOR_LEVELS];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -234,11 +232,11 @@ const AmmoDetail: React.FC = () => {
                         title="Helmet"
                       />
                     </div>
-                    {helmArmorLevels.map(level => (
+                    {HELMET_ARMOR_LEVELS.map(level => (
                       <div key={`helm-${level}`} title={`Helmet ${level}: ${ammo.helmPenetration[level]}`} className={`h-full min-h-[32px] rounded ${getPenetrationColorClass(ammo.helmPenetration[level])} border border-black/10 shadow-inner transition-transform duration-150 hover:scale-110 hover:z-10 relative`}>
                       </div>
                     ))}
-                    {bodyArmorLevels.map(level => (
+                    {BODY_ARMOR_LEVELS.map(level => (
                       <div key={`helm-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
                     ))}
 
@@ -250,10 +248,10 @@ const AmmoDetail: React.FC = () => {
                         title="Body Armor"
                       />
                     </div>
-                    {helmArmorLevels.map(level => (
+                    {HELMET_ARMOR_LEVELS.map(level => (
                       <div key={`body-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
                     ))}
-                    {bodyArmorLevels.map(level => (
+                    {BODY_ARMOR_LEVELS.map(level => (
                       <div key={`body-${level}`} title={`Body ${level}: ${ammo.bodyPenetration[level]}`} className={`h-full min-h-[32px] rounded ${getPenetrationColorClass(ammo.bodyPenetration[level])} border border-black/10 shadow-inner transition-transform duration-150 hover:scale-110 hover:z-10 relative`}>
                       </div>
                     ))}

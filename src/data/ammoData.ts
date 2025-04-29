@@ -1,5 +1,9 @@
 export type ArmorLevel = 'I' | 'IIA' | 'IIA+' | 'IIIA' | 'IIIA+' | 'III' | 'III+';
-export type PenetrationValue = 0 | 1 | 2 | 3; // 0:Red, 1:Orange, 2:Yellow, 3:Green
+export type PenetrationValue = 0 | 1 | 2 | 3;
+
+// Define specific armor levels for helmet and body
+export const HELMET_ARMOR_LEVELS: Extract<ArmorLevel, 'I' | 'IIA' | 'IIA+'>[] = ['I', 'IIA', 'IIA+'];
+export const BODY_ARMOR_LEVELS: Extract<ArmorLevel, 'IIIA' | 'IIIA+' | 'III' | 'III+'>[] = ['IIIA', 'IIIA+', 'III', 'III+'];
 
 export interface AmmoType {
   id: string;
@@ -556,4 +560,3 @@ export const penetrationColorClass = (value: PenetrationValue): string => {
     default: return 'bg-gray-400';
   }
 };
-
