@@ -11,6 +11,84 @@ const navigation = [
 export default function Navigation() {
   const location = useLocation();
 
+  const renderLink = (item: { name: string; href: string }) => {
+    const current = location.pathname === item.href;
+    const className = `inline-flex items-center px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${current
+      ? 'bg-accent/10 text-text border-b-2 border-accent'
+      : 'text-muted hover:text-text hover:bg-accent/5'
+      }`;
+
+    if (item.href.startsWith('http://') || item.href.startsWith('https://')) {
+      return (
+        <a
+          key={item.name}
+          href={item.href}
+          className={className}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {item.name}
+        </a>
+      );
+    } else {
+      return (
+        <Link
+          key={item.name}
+          to={item.href}
+          className={className}
+        >
+          {item.name}
+        </Link>
+      );
+    }
+  };
+
+  const renderMobileLink = (item: { name: string; href: string }) => {
+    const current = location.pathname === item.href;
+    const className = `block w-full text-center rounded-md px-3 py-2 text-base font-medium transition-all duration-200 ${current
+      ? 'bg-accent/10 text-text border-l-2 border-accent'
+      : 'text-muted hover:text-text hover:bg-accent/5'
+      }`;
+
+    if (item.href.startsWith('http://') || item.href.startsWith('https://')) {
+      return (
+        <a
+          key={item.name}
+          href={item.href}
+          className={className}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => {
+            // This will close the menu when a link is clicked
+            const closeButton = document.querySelector('[aria-label="Close main menu"]');
+            if (closeButton instanceof HTMLElement) {
+              closeButton.click();
+            }
+          }}
+        >
+          {item.name}
+        </a>
+      );
+    } else {
+      return (
+        <Link
+          key={item.name}
+          to={item.href}
+          className={className}
+          onClick={() => {
+            // This will close the menu when a link is clicked
+            const closeButton = document.querySelector('[aria-label="Close main menu"]');
+            if (closeButton instanceof HTMLElement) {
+              closeButton.click();
+            }
+          }}
+        >
+          {item.name}
+        </Link>
+      );
+    }
+  };
+
   return (
     <Disclosure as="nav" className="bg-secondary shadow-lg sticky top-0 z-50">
       {() => (
@@ -23,26 +101,12 @@ export default function Navigation() {
                     <img src={logo} alt="Logo" className="h-8 w-8" />
                     <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full"></div>
                   </div>
-                  <span className="bg-gradient-to-r from-text to-muted bg-clip-text text-transparent font-extrabold text-white">
+                  <span className="bg-gradient-to-r from-text to-muted bg-clip-text font-extrabold text-white">
                     Ammo Analyzer
                   </span>
                 </div>
-                <div className="sm:ml-8 sm:flex sm:space-x-8 items-center">
-                  {navigation.map((item) => {
-                    const current = location.pathname === item.href;
-                    return (
-                      <Link
-                        key={item.name}
-                        to={item.href as string}
-                        className={`inline-flex items-center px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${current
-                          ? 'bg-accent/10 text-text border-b-2 border-accent'
-                          : 'text-muted hover:text-text hover:bg-accent/5'
-                          }`}
-                      >
-                        {item.name}
-                      </Link>
-                    );
-                  })}
+                <div className="sm:ml-8 flex sm:space-x-8 items-center gap-6">
+                  {navigation.map((item) => renderLink(item))}
                 </div>
               </div>
             </div>
@@ -58,28 +122,7 @@ export default function Navigation() {
           >
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 pb-3 pt-2 px-4 flex flex-col items-center">
-                {navigation.map((item) => {
-                  const current = location.pathname === item.href;
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.href as string}
-                      className={`block w-full text-center rounded-md px-3 py-2 text-base font-medium transition-all duration-200 ${current
-                        ? 'bg-accent/10 text-text border-l-2 border-accent'
-                        : 'text-muted hover:text-text hover:bg-accent/5'
-                        }`}
-                      onClick={() => {
-                        // This will close the menu when a link is clicked
-                        const closeButton = document.querySelector('[aria-label="Close main menu"]');
-                        if (closeButton instanceof HTMLElement) {
-                          closeButton.click();
-                        }
-                      }}
-                    >
-                      {item.name}
-                    </Link>
-                  );
-                })}
+                {navigation.map((item) => renderMobileLink(item))}
                 <div className="pt-4 pb-2 border-t border-gray-700 w-full">
                   <div className="flex items-center justify-center space-x-6 mt-3">
                     <a
