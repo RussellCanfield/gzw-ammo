@@ -351,15 +351,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
               </div>
             )}
           </>
-        ) : (
-          <div className="bg-secondary rounded-lg p-8 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-muted mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-muted text-lg">Select ammunition types to compare</p>
-            <p className="text-sm text-muted mt-2">Choose at least one ammunition type</p>
-          </div>
-        )}
+        ) : null}
       </div>
 
       {/* Custom scrollbar styles */}
