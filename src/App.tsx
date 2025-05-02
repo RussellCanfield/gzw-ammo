@@ -30,7 +30,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-primary flex flex-col">
+      <div className="min-h-screen bg-primary flex flex-col bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/cartographer.png)] bg-center) bg-[#151515] text-[#cbcccc]">
         <Navigation />
         <main className="flex-grow">
           <Routes>
@@ -60,7 +60,7 @@ function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center">
-                <img src={logo} alt="Logo" className="h-16 mr-2" />
+                <img src={logo} alt="Logo" className="h-auto mr-2" />
               </div>
             </div>
           </div>

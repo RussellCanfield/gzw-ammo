@@ -40,7 +40,7 @@ const AmmoCard: React.FC<AmmoCardProps> = ({ ammo, detailed = false }) => {
   );
 
   const cardContent = (
-    <div className="bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] h-full flex flex-col">
+    <div className="bg-[var(--color-secondary)] rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] h-full flex flex-col bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
       <div className="px-4 py-4 flex-grow">
         <div className="flex justify-between items-center mb-3">
           <h3 className="text-lg font-bold text-text flex items-center">

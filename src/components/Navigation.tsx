@@ -13,9 +13,9 @@ export default function Navigation() {
 
   const renderLink = (item: { name: string; href: string }) => {
     const current = location.pathname === item.href;
-    const className = `inline-flex items-center px-3 py-1 text-sm font-medium rounded-md transition-all duration-200 ${current
-      ? 'bg-accent/10 text-text border-b-2 border-accent'
-      : 'text-muted hover:text-text hover:bg-accent/5'
+    const className = `inline-flex items-center px-3 py-1 text-sm font-medium rounded-md ${current
+      ? 'text-text border-b-2 border-black bg-[var(--color-btn-active)]'
+      : 'text-muted hover:text-text hover:bg-accent/5 bg-[var(--color-btn)]'
       }`;
 
     if (item.href.startsWith('http://') || item.href.startsWith('https://')) {
@@ -90,7 +90,7 @@ export default function Navigation() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-secondary shadow-lg sticky top-0 z-50">
+    <Disclosure as="nav" className="bg-secondary">
       {() => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-8">

@@ -95,7 +95,7 @@ const Ammunition: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="bg-secondary rounded-lg shadow-lg p-6 mb-4">
+      <div className="mb-4 p-2 md:p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label htmlFor="caliber-select" className="block text-sm font-medium text-muted mb-1">

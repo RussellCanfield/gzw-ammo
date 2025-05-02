@@ -35,7 +35,7 @@ const Compare: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="bg-secondary rounded-lg shadow-lg overflow-hidden mb-4 p-2 md:p-4">
+      <div className="overflow-hidden mb-4 p-2 md:p-4">
         <div className="mb-4">
           <label htmlFor="caliber-select" className="block text-sm font-medium text-muted mb-1">
             Caliber
@@ -57,7 +57,7 @@ const Compare: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-2">
-        <div className="bg-secondary rounded-lg p-2 sm:p-4 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
+        <div className="bg-secondary rounded-lg p-2 sm:p-4 transform transition-all duration-300 hover:scale-[1.02] bg-[var(--color-secondary)] bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
           <div className="flex items-center mb-4">
             <div className="p-3 bg-accent/20 rounded-full mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -89,7 +89,7 @@ const Compare: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-secondary rounded-lg p-2 sm:p-4 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
+        <div className="bg-secondary rounded-lg p-2 sm:p-4 transform transition-all duration-300 hover:scale-[1.02] bg-[var(--color-secondary)] bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
           <div className="flex items-center mb-4">
             <div className="p-3 bg-accent/20 rounded-full mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -146,7 +146,7 @@ const Compare: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-secondary rounded-lg p-2 sm:p-4 shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
+        <div className="bg-secondary rounded-lg p-2 sm:p-4 transform transition-all duration-300 hover:scale-[1.02] bg-[var(--color-secondary)] bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
           <div className="flex items-center mb-4">
             <div className="p-3 bg-accent/20 rounded-full mr-3">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -176,18 +176,8 @@ const Compare: React.FC = () => {
       </div>
 
       <div className="bg-secondary rounded-lg p-2 sm:p-4 shadow-lg">
-        <div className="flex items-center mb-6">
-          <div className="p-3 bg-accent/20 rounded-full mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-          </div>
-          <h2 className="text-2xl font-bold text-text">Armor Penetration Guide</h2>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-primary/50 rounded-lg p-4">
+          <div className="bg-primary/50 rounded-lg p-4 bg-[var(--color-secondary)] bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
             <h3 className="text-lg font-medium text-text mb-3 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
@@ -213,7 +203,7 @@ const Compare: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-primary/50 rounded-lg p-4">
+          <div className="bg-primary/50 rounded-lg p-4 bg-[var(--color-secondary)] bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
             <h3 className="text-lg font-medium text-text mb-3 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-accent mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>

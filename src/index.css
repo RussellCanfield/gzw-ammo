@@ -3,10 +3,13 @@
 @layer base {
   :root {
     --color-primary: 23 23 25;
-    --color-secondary: 32 32 35;
+    --color-secondary: #2d2a25;
     --color-accent: 220 38 38;
     --color-text: 229 231 235;
     --color-muted: 156 163 175;
+    --color-btn: #171717;
+    --color-btn-active: #373733;
+    --card-shadow: 3px 3px 3px #000 !important;
   }
 }
 

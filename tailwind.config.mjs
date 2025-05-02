@@ -11,6 +11,8 @@ export default {
         accent: "rgb(var(--color-accent) / <alpha-value>)",
         text: "rgb(var(--color-text) / <alpha-value>)",
         muted: "rgb(var(--color-muted) / <alpha-value>)",
+        btn: "--color-btn",
+        'btn-active': "--color-btn-active",
       },
     },
   },
