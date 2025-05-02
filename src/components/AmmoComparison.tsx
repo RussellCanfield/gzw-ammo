@@ -223,10 +223,10 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
                         <th className="px-4 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700">
                           Ammo Type
                         </th>
-                        <th colSpan={3} className="px-4 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l border-gray-700">
+                        <th colSpan={3} className="px-4 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l">
                           Helmet Armor
                         </th>
-                        <th colSpan={4} className="px-4 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l border-gray-700">
+                        <th colSpan={4} className="px-4 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l">
                           Body Armor
                         </th>
                       </tr>
@@ -235,12 +235,12 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
 
                         </th>
                         {HELMET_ARMOR_LEVELS.map(level => (
-                          <th key={level} className="px-3 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l border-gray-700">
+                          <th key={level} className="px-3 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l">
                             {level}
                           </th>
                         ))}
                         {BODY_ARMOR_LEVELS.map(level => (
-                          <th key={level} className="px-3 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l border-gray-700">
+                          <th key={level} className="px-3 py-2 text-center text-xs font-medium text-muted uppercase tracking-wider border-b border-gray-700 border-l">
                             {level}
                           </th>
                         ))}
@@ -332,7 +332,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({ caliber, selectedTypes,
                       <div className="flex space-x-1">
                         {[...HELMET_ARMOR_LEVELS, ...BODY_ARMOR_LEVELS].map((level) => {
                           const penValue = HELMET_ARMOR_LEVELS.includes(level as any)
-                            ? ammo.helmPenetration[level as 'I' | 'IIA' | 'IIA+']
+                            ? ammo.helmPenetration[level as 'IIA' | 'IIIA' | 'IIIA+']
                             : ammo.bodyPenetration[level as 'IIIA' | 'IIIA+' | 'III' | 'III+'];
 
                           return (
