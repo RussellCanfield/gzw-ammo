@@ -22,7 +22,6 @@ const Compare: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Update URL parameters when state changes
     setSearchParams({
       caliber: selectedCaliber,
       types: selectedTypes.join(','),
@@ -31,7 +30,7 @@ const Compare: React.FC = () => {
 
   const handleCaliberChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCaliber(e.target.value);
-    setSelectedTypes([]); // Reset selected types when caliber changes
+    setSelectedTypes([]);
   };
 
   return (

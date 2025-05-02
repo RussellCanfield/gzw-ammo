@@ -95,20 +95,6 @@ const Ammunition: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-4 bg-gradient-to-r from-secondary to-secondary/50 p-6 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold text-text mb-2 flex items-center">
-          <span className="mr-2">Ammunition Database</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-            <path d="M2 17l10 5 10-5"></path>
-            <path d="M2 12l10 5 10-5"></path>
-          </svg>
-        </h1>
-        <p className="text-muted text-lg">
-          Browse all ammunition types available in Gray Zone Warfare
-        </p>
-      </div>
-
       <div className="bg-secondary rounded-lg shadow-lg p-6 mb-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>

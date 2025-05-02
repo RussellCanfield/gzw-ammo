@@ -102,7 +102,7 @@ export default function Navigation() {
                     <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-full"></div>
                   </div>
                   <span className="bg-gradient-to-r from-text to-muted bg-clip-text font-extrabold text-white">
-                    Ammo Analyzer
+                    Ammo & Ballistics
                   </span>
                 </div>
                 <div className="sm:ml-8 flex sm:space-x-8 items-center gap-6">

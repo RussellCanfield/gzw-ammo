@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getAmmoById, getAmmoByCalibrer, AmmoType, PenetrationValue, HELMET_ARMOR_LEVELS, BODY_ARMOR_LEVELS } from '../data/ammoData';
+import { getAmmoById, getAmmoByCalibrer, AmmoType, PenetrationValue, HELMET_ARMOR_LEVELS, BODY_ARMOR_LEVELS, ArmorLevel } from '../data/ammoData';
 import helmetIcon from '../assets/helmet.webp';
 import plateIcon from '../assets/plate.webp';
 
@@ -39,16 +39,16 @@ const AmmoDetail: React.FC = () => {
 
     const velocityFactor = maxVelocity > 0 ? ammoData.velocity / maxVelocity : 0;
 
-    // Base unarmored score - Check if Helmet I or Body IIIA penetration is high (value of 3)
+    // Base unarmored score - Check if Helmet IIA or Body IIIA penetration is high (value of 3)
     let unArmoredScore;
-    if (ammoData.helmPenetration['I'] === 3 || ammoData.bodyPenetration['IIIA'] === 3) {
+    if (ammoData.helmPenetration['IIA'] === 3 || ammoData.bodyPenetration['IIIA'] === 3) {
       unArmoredScore = 100; // 100% effective against unarmored if high penetration on base armor levels
     } else {
       unArmoredScore = Math.round(velocityFactor * 100);
     }
 
     // Calculate penetration factors (0 to 1)
-    const lightArmorPen = ammoData.helmPenetration['I'] + ammoData.helmPenetration['IIA'] + ammoData.helmPenetration['IIA+'];
+    const lightArmorPen = ammoData.helmPenetration['IIA'] + ammoData.helmPenetration['IIIA'] + ammoData.helmPenetration['IIIA+'];
     const maxLightArmorPen = 9; // 3 levels * 3 max pen value
     const penetrationFactorLight = lightArmorPen / maxLightArmorPen;
 
@@ -66,8 +66,9 @@ const AmmoDetail: React.FC = () => {
   const getAmmoProfile = (ammoData: AmmoType) => {
     const scores = [
       { type: 'unarmored targets', score: effectivenessScores.unArmoredScore },
-      { type: 'lightly armored targets (Helmet I-IIA+)', score: effectivenessScores.lightArmorScore },
-      { type: 'heavily armored targets (Body IIIA-III+)', score: effectivenessScores.heavyArmorScore }
+      // Updated description to reflect actual helmet levels
+      { type: 'lightly armored targets (Helmet IIA, IIIA, IIIA+)', score: effectivenessScores.lightArmorScore },
+      { type: 'heavily armored targets (Body IIIA, IIIA+, III, III+)', score: effectivenessScores.heavyArmorScore }
     ];
     scores.sort((a, b) => b.score - a.score);
     let description = `This ${ammoData.name} ammunition excels against ${scores[0].type}.`;
@@ -117,7 +118,14 @@ const AmmoDetail: React.FC = () => {
     );
   }
 
-  const allArmorLevels = [...HELMET_ARMOR_LEVELS, ...BODY_ARMOR_LEVELS];
+  // Create a unique, sorted list of all armor levels
+  const uniqueArmorLevels = [
+    ...new Set([...HELMET_ARMOR_LEVELS, ...BODY_ARMOR_LEVELS])
+  ].sort((a, b) => {
+    // Custom sort logic for armor levels (IIA < IIIA < IIIA+ < III < III+)
+    const order: ArmorLevel[] = ['IIA', 'IIIA', 'IIIA+', 'III', 'III+'];
+    return order.indexOf(a) - order.indexOf(b);
+  }) as ArmorLevel[];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -215,15 +223,19 @@ const AmmoDetail: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Unified Penetration Grid */}
+                {/* Unified Penetration Grid - Updated */}
                 <div className='bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]'>
                   <h3 className="text-lg font-semibold mb-3 text-text/90">Armor Penetration Profile</h3>
-                  <div className="grid grid-cols-[auto_repeat(7,_minmax(0,_1fr))] gap-1 bg-secondary/50 p-2 rounded-lg shadow-sm">
+                  {/* Updated grid columns to match unique armor levels */}
+                  <div className="grid grid-cols-[auto_repeat(5,_minmax(0,_1fr))] gap-1 bg-secondary/50 p-2 rounded-lg shadow-sm">
+                    {/* Header Row - Icon Placeholder */}
                     <div className="text-center text-xs font-medium text-muted"></div>
-                    {allArmorLevels.map(level => (
+                    {/* Header Row - Unique Armor Levels */}
+                    {uniqueArmorLevels.map(level => (
                       <div key={level} className="text-center text-xs font-medium text-muted/70 py-1">{level}</div>
                     ))}
 
+                    {/* Helmet Row - Icon */}
                     <div className="flex items-center justify-center">
                       <img
                         src={helmetIcon}
@@ -232,14 +244,22 @@ const AmmoDetail: React.FC = () => {
                         title="Helmet"
                       />
                     </div>
-                    {HELMET_ARMOR_LEVELS.map(level => (
-                      <div key={`helm-${level}`} title={`Helmet ${level}: ${ammo.helmPenetration[level]}`} className={`h-full min-h-[32px] rounded ${getPenetrationColorClass(ammo.helmPenetration[level])} border border-black/10 shadow-inner transition-transform duration-150 hover:scale-110 hover:z-10 relative`}>
-                      </div>
-                    ))}
-                    {BODY_ARMOR_LEVELS.map(level => (
-                      <div key={`helm-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
-                    ))}
+                    {/* Helmet Row - Penetration Cells */}
+                    {uniqueArmorLevels.map(level => {
+                      const isHelmetLevel = HELMET_ARMOR_LEVELS.includes(level as any);
+                      const penetrationValue = isHelmetLevel ? ammo.helmPenetration[level as keyof typeof ammo.helmPenetration] : undefined;
+                      const title = isHelmetLevel ? `Helmet ${level}: ${penetrationLevelText(penetrationValue!)}` : `Helmet ${level}: N/A`;
+                      return (
+                        <div
+                          key={`helm-${level}`}
+                          title={title}
+                          className={`h-full min-h-[32px] rounded ${isHelmetLevel ? getPenetrationColorClass(penetrationValue!) : 'bg-black/10 opacity-50'} border border-black/10 shadow-inner transition-transform duration-150 ${isHelmetLevel ? 'hover:scale-110 hover:z-10' : ''} relative`}
+                        >
+                        </div>
+                      );
+                    })}
 
+                    {/* Body Armor Row - Icon */}
                     <div className="flex items-center justify-center">
                       <img
                         src={plateIcon}
@@ -248,13 +268,20 @@ const AmmoDetail: React.FC = () => {
                         title="Body Armor"
                       />
                     </div>
-                    {HELMET_ARMOR_LEVELS.map(level => (
-                      <div key={`body-placeholder-${level}`} className="bg-black/10 h-full min-h-[32px] rounded opacity-50 border border-black/20"></div>
-                    ))}
-                    {BODY_ARMOR_LEVELS.map(level => (
-                      <div key={`body-${level}`} title={`Body ${level}: ${ammo.bodyPenetration[level]}`} className={`h-full min-h-[32px] rounded ${getPenetrationColorClass(ammo.bodyPenetration[level])} border border-black/10 shadow-inner transition-transform duration-150 hover:scale-110 hover:z-10 relative`}>
-                      </div>
-                    ))}
+                    {/* Body Armor Row - Penetration Cells */}
+                    {uniqueArmorLevels.map(level => {
+                      const isBodyLevel = BODY_ARMOR_LEVELS.includes(level as any);
+                      const penetrationValue = isBodyLevel ? ammo.bodyPenetration[level as keyof typeof ammo.bodyPenetration] : undefined;
+                      const title = isBodyLevel ? `Body ${level}: ${penetrationLevelText(penetrationValue!)}` : `Body ${level}: N/A`;
+                      return (
+                        <div
+                          key={`body-${level}`}
+                          title={title}
+                          className={`h-full min-h-[32px] rounded ${isBodyLevel ? getPenetrationColorClass(penetrationValue!) : 'bg-black/10 opacity-50'} border border-black/10 shadow-inner transition-transform duration-150 ${isBodyLevel ? 'hover:scale-110 hover:z-10' : ''} relative`}
+                        >
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="mt-1.5 text-xs text-muted/70 text-right">
                     <p className="flex items-center justify-end gap-1">
@@ -304,6 +331,17 @@ const AmmoDetail: React.FC = () => {
       </div>
     </div>
   );
+};
+
+// Helper function to convert penetration values to readable text (moved outside component for clarity)
+const penetrationLevelText = (value: PenetrationValue): string => {
+  switch(value) {
+    case 0: return 'No penetration';
+    case 1: return 'Low penetration';
+    case 2: return 'Medium penetration';
+    case 3: return 'High penetration';
+    default: return 'Unknown';
+  }
 };
 
 export default AmmoDetail;
