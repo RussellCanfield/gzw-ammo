@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getAmmoById, getAmmoByCalibrer, AmmoType, PenetrationValue, HELMET_ARMOR_LEVELS, BODY_ARMOR_LEVELS, ArmorLevel } from '../data/ammoData';
+import { getAmmoById, getAmmoByCalibrer, AmmoType, PenetrationValue, HELMET_ARMOR_LEVELS, BODY_ARMOR_LEVELS, ArmorLevel, penetrationColorClass } from '../data/ammoData';
 import helmetIcon from '../assets/helmet.webp';
 import plateIcon from '../assets/plate.webp';
 
@@ -91,16 +91,6 @@ const AmmoDetail: React.FC = () => {
     if (score >= 70) return 'bg-gradient-to-r from-emerald-500 to-green-500';
     if (score >= 40) return 'bg-gradient-to-r from-amber-500 to-yellow-500';
     return 'bg-gradient-to-r from-rose-600 to-red-600';
-  };
-
-  const getPenetrationColorClass = (level: PenetrationValue): string => {
-    switch (level) {
-      case 0: return 'bg-red-600';
-      case 1: return 'bg-orange-500';
-      case 2: return 'bg-yellow-500';
-      case 3: return 'bg-green-500';
-      default: return 'bg-gray-700';
-    }
   };
 
   if (!ammo) {
@@ -253,7 +243,7 @@ const AmmoDetail: React.FC = () => {
                         <div
                           key={`helm-${level}`}
                           title={title}
-                          className={`h-full min-h-[32px] rounded ${isHelmetLevel ? getPenetrationColorClass(penetrationValue!) : 'bg-black/10 opacity-50'} border border-black/10 shadow-inner transition-transform duration-150 ${isHelmetLevel ? 'hover:scale-110 hover:z-10' : ''} relative`}
+                          className={`h-full min-h-[32px] rounded ${isHelmetLevel ? penetrationColorClass(penetrationValue!) : 'bg-black/10 opacity-50'} border border-black/10 shadow-inner transition-transform duration-150 ${isHelmetLevel ? 'hover:scale-110 hover:z-10' : ''} relative`}
                         >
                         </div>
                       );
@@ -277,7 +267,7 @@ const AmmoDetail: React.FC = () => {
                         <div
                           key={`body-${level}`}
                           title={title}
-                          className={`h-full min-h-[32px] rounded ${isBodyLevel ? getPenetrationColorClass(penetrationValue!) : 'bg-black/10 opacity-50'} border border-black/10 shadow-inner transition-transform duration-150 ${isBodyLevel ? 'hover:scale-110 hover:z-10' : ''} relative`}
+                          className={`h-full min-h-[32px] rounded ${isBodyLevel ? penetrationColorClass(penetrationValue!) : 'bg-black/10 opacity-50'} border border-black/10 shadow-inner transition-transform duration-150 ${isBodyLevel ? 'hover:scale-110 hover:z-10' : ''} relative`}
                         >
                         </div>
                       );
