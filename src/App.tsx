@@ -5,6 +5,7 @@ import Ammunition from './pages/Ammunition';
 import Compare from './pages/Compare';
 import AmmoDetail from './pages/AmmoDetail';
 import logo from './assets/GZW-Text-logo.webp';
+import './index.css'
 
 // ScrollToTop component to ensure page scrolls to top on route change
 function ScrollToTop() {
