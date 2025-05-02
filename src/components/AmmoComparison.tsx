@@ -67,6 +67,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 		dispersion: ammo.dispersion,
 	}));
 
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	const CustomTooltip = ({ active, payload, label }: any) => {
 		if (active && payload && payload.length) {
 			return (
@@ -76,7 +77,9 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 				>
 					<p className="font-medium text-text text-base">{label}</p>
 					<div className="mt-2 space-y-1.5">
+						{/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}
 						{payload.map((entry: any, index: number) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 							<div key={index} className="flex items-center">
 								<div
 									className="h-3 w-3 rounded-full mr-2"
@@ -145,8 +148,9 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 			{selectedAmmoData.length > 0 ? (
 				<>
 					<div className="mb-6">
-						<div className="flex border-b border-gray-700">
+						<div className="flex items-center justify-center">
 							<button
+								type="button"
 								className={`px-4 py-2 font-medium text-sm focus:outline-none ${
 									activeTab === "charts"
 										? "text-accent border-b-2 border-accent"
@@ -157,6 +161,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 								Performance Charts
 							</button>
 							<button
+								type="button"
 								className={`px-4 py-2 font-medium text-sm focus:outline-none ${
 									activeTab === "penetration"
 										? "text-accent border-b-2 border-accent"
@@ -167,6 +172,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 								Penetration Data
 							</button>
 							<button
+								type="button"
 								className={`px-4 py-2 font-medium text-sm focus:outline-none ${
 									activeTab === "details"
 										? "text-accent border-b-2 border-accent"
@@ -184,6 +190,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<div className="bg-primary/30 rounded-lg p-4">
 									<h3 className="text-lg font-medium mb-4 flex items-center">
+										{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											className="h-5 w-5 text-accent mr-2"
@@ -206,14 +213,18 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 												margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
 											>
 												<CartesianGrid strokeDasharray="3 3" stroke="#444" />
-												<XAxis dataKey="name" tick={{ fill: "#e5e7eb" }} />
-												<YAxis tick={{ fill: "#e5e7eb" }} />
+												<XAxis
+													dataKey="name"
+													tick={{ fill: "#e5e7eb" }}
+													axisLine={false}
+												/>
+												<YAxis tick={{ fill: "#e5e7eb" }} axisLine={false} />
 												<Tooltip content={<CustomTooltip />} />
 												<Legend wrapperStyle={{ color: "#e5e7eb" }} />
 												<Bar
 													dataKey="velocity"
 													name="Velocity (m/s)"
-													fill="#3b82f6"
+													fill="#999999"
 												/>
 											</BarChart>
 										</ResponsiveContainer>
@@ -222,6 +233,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 
 								<div className="bg-primary/30 rounded-lg p-4">
 									<h3 className="text-lg font-medium mb-4 flex items-center">
+										{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											className="h-5 w-5 text-accent mr-2"
@@ -246,8 +258,16 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 												margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
 											>
 												<CartesianGrid strokeDasharray="3 3" stroke="#444" />
-												<XAxis dataKey="name" tick={{ fill: "#e5e7eb" }} />
-												<YAxis tick={{ fill: "#e5e7eb" }} domain={[-50, 50]} />
+												<XAxis
+													dataKey="name"
+													tick={{ fill: "#e5e7eb" }}
+													axisLine={false}
+												/>
+												<YAxis
+													tick={{ fill: "#e5e7eb" }}
+													domain={[-50, 50]}
+													axisLine={false}
+												/>
 												<Tooltip content={<CustomTooltip />} />
 												<Legend wrapperStyle={{ color: "#e5e7eb" }} />
 												<Bar
@@ -266,6 +286,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 					{activeTab === "penetration" && (
 						<div className="bg-primary/30 rounded-lg p-4">
 							<h3 className="text-lg font-medium mb-4 flex items-center">
+								{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									className="h-5 w-5 text-accent mr-2"
@@ -389,6 +410,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 									</h4>
 									<div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
 										<div className="flex items-center">
+											{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												className="h-4 w-4 text-accent mr-1.5"
@@ -408,6 +430,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 											</span>
 										</div>
 										<div className="flex items-center">
+											{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												className="h-4 w-4 text-accent mr-1.5"
@@ -431,6 +454,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 											</span>
 										</div>
 										<div className="flex items-center">
+											{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												className="h-4 w-4 text-accent mr-1.5"
@@ -448,6 +472,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 											<span className="text-text">{ammo.traderUnlock}</span>
 										</div>
 										<div className="flex items-center">
+											{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												className="h-4 w-4 text-accent mr-1.5"
@@ -476,6 +501,7 @@ const AmmoComparison: React.FC<AmmoComparisonProps> = ({
 											{[...HELMET_ARMOR_LEVELS, ...BODY_ARMOR_LEVELS].map(
 												(level) => {
 													const penValue = HELMET_ARMOR_LEVELS.includes(
+														// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 														level as any,
 													)
 														? ammo.helmPenetration[
