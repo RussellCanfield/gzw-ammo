@@ -116,9 +116,9 @@ const AmmoDetail: React.FC = () => {
 	};
 
 	const getEffectivenessColor = (score: number) => {
-		if (score >= 70) return "bg-gradient-to-r from-emerald-500 to-green-500";
+		if (score >= 70) return "bg-gradient-to-r from-rose-600 to-red-600";
 		if (score >= 40) return "bg-gradient-to-r from-amber-500 to-yellow-500";
-		return "bg-gradient-to-r from-rose-600 to-red-600";
+		return "bg-gradient-to-r from-emerald-500 to-green-500";
 	};
 
 	if (!ammo) {
