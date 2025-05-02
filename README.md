@@ -65,6 +65,6 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 
 This project is for educational purposes only. All game data belongs to Gray Zone Warfare and MADFINGER Games.
 
-## Disclaimer
+### Disclaimer
 
 This application is not affiliated with, endorsed by, or connected to Gray Zone Warfare or MADFINGER Games. All game-related information is used for educational purposes only.
