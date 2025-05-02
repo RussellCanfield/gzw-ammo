@@ -1,40 +1,41 @@
 {
-  "name": "gzw-ammo",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build && vite build --config vite.module.config.ts",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@headlessui/react": "^2.2.2",
-    "@heroicons/react": "^2.2.0",
-    "@tailwindcss/vite": "^4.1.4",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.5.2",
-    "recharts": "^2.15.3",
-    "tailwindcss": "^4.1.4",
-    "@module-federation/vite": "1.2.7",
-    "@module-federation/enhanced": "0.13.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.22.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "typescript": "~5.7.2",
-    "typescript-eslint": "^8.26.1",
-    "vite": "5.2.10",
-    "vite-plugin-zephyr": "0.0.39"
-  }
+	"name": "gzw-ammo",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build && vite build --config vite.module.config.ts",
+		"lint": "eslint .",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@headlessui/react": "^2.2.2",
+		"@heroicons/react": "^2.2.0",
+		"@module-federation/enhanced": "0.13.0",
+		"@module-federation/vite": "1.2.7",
+		"@tailwindcss/vite": "^4.1.4",
+		"autoprefixer": "^10.4.21",
+		"postcss": "^8.5.3",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"react-router-dom": "^7.5.2",
+		"recharts": "^2.15.3",
+		"tailwindcss": "^4.1.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@eslint/js": "^9.22.0",
+		"@types/react": "^19.0.10",
+		"@types/react-dom": "^19.0.4",
+		"@vitejs/plugin-react": "^4.3.4",
+		"eslint": "^9.22.0",
+		"eslint-plugin-react-hooks": "^5.2.0",
+		"eslint-plugin-react-refresh": "^0.4.19",
+		"globals": "^16.0.0",
+		"typescript": "~5.7.2",
+		"typescript-eslint": "^8.26.1",
+		"vite": "5.2.10",
+		"vite-plugin-zephyr": "0.0.39"
+	}
 }
