@@ -181,10 +181,10 @@ const AmmoDetail: React.FC = () => {
                 <h3 className="text-lg font-semibold mb-3 text-text/90">Penetration Legend</h3>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 bg-primary/30 rounded-lg p-4 shadow-sm">
                   {[
-                    { color: 'bg-red-600', label: 'No penetration' },
-                    { color: 'bg-orange-500', label: 'Low penetration' },
-                    { color: 'bg-yellow-500', label: 'Medium penetration' },
-                    { color: 'bg-green-500', label: 'High penetration' },
+                    { color: 'bg-green-500', label: 'No penetration' },
+                    { color: 'bg-yellow-500', label: 'Low penetration' },
+                    { color: 'bg-orange-500', label: 'Medium penetration' },
+                    { color: 'bg-red-600', label: 'High penetration' },
                   ].map(item => (
                     <div key={item.label} className="flex items-center">
                       <div className={`h-3 w-3 rounded-sm ${item.color} mr-2 shadow-sm`}></div>
@@ -335,7 +335,7 @@ const AmmoDetail: React.FC = () => {
 
 // Helper function to convert penetration values to readable text (moved outside component for clarity)
 const penetrationLevelText = (value: PenetrationValue): string => {
-  switch(value) {
+  switch (value) {
     case 0: return 'No penetration';
     case 1: return 'Low penetration';
     case 2: return 'Medium penetration';
