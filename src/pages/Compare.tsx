@@ -268,9 +268,9 @@ const Compare: React.FC = () => {
 				</div>
 			</div>
 
-			<div className="bg-secondary rounded-lg p-2 sm:p-4 shadow-lg">
+			<div className="bg-secondary rounded-lg p-2 sm:p-4">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div className="bg-primary/50 rounded-lg p-4 bg-[var(--color-secondary)] bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
+					<div className="bg-primary/50 rounded-lg p-4 bg-[#111] border-black border-[1px] shadow-[var(--card-shadow)]">
 						<h3 className="text-lg font-medium text-text mb-3 flex items-center">
 							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 							<svg
@@ -312,7 +312,7 @@ const Compare: React.FC = () => {
 						</div>
 					</div>
 
-					<div className="bg-primary/50 rounded-lg p-4 bg-[var(--color-secondary)] bg-[url(https://www.grayzonewarfare.net/data/assets/style_properties/fake-brick.png)] border-black border-[1px] shadow-[var(--card-shadow)]">
+					<div className="bg-primary/50 rounded-lg p-4 bg-[#111] border-black border-[1px] shadow-[var(--card-shadow)]">
 						<h3 className="text-lg font-medium text-text mb-3 flex items-center">
 							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 							<svg

@@ -188,8 +188,8 @@ const AmmoDetail: React.FC = () => {
 				</Link>
 			</div>
 
-			<div className="bg-secondary/70 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden mb-8">
-				<div className="p-6 md:p-8">
+			<div className="bg-secondary/70 backdrop-blur-sm rounded-xl overflow-hidden mb-8 shadow-[3px_3px_3px_#000]">
+				<div className="p-6 md:p-8 bg-[#111]">
 					<div className="flex flex-wrap items-baseline mb-6 pb-2">
 						<h1 className="text-4xl font-bold text-text tracking-tight mr-3">
 							{ammo.name}
@@ -242,7 +242,7 @@ const AmmoDetail: React.FC = () => {
 									].map((stat) => (
 										<div
 											key={stat.key}
-											className="bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]"
+											className="gzwbrown rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]"
 										>
 											<p className="text-muted text-xs uppercase tracking-wider mb-1 font-medium">
 												{stat.label}
@@ -266,7 +266,7 @@ const AmmoDetail: React.FC = () => {
 								<h3 className="text-lg font-semibold mb-3 text-text/90">
 									Penetration Legend
 								</h3>
-								<div className="grid grid-cols-2 gap-x-4 gap-y-2 bg-primary/30 rounded-lg p-4 shadow-sm">
+								<div className="grid grid-cols-2 gap-x-4 gap-y-2 bg-primary/30 rounded-lg p-4">
 									{[
 										{ color: "bg-green-500", label: "No penetration" },
 										{ color: "bg-yellow-500", label: "Low penetration" },
@@ -294,7 +294,7 @@ const AmmoDetail: React.FC = () => {
 
 							<div className="rounded-lg shadow-md space-y-6">
 								{/* Combat Effectiveness */}
-								<div className="bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]">
+								<div className="gzwbrown rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]">
 									<h3 className="text-lg font-semibold mb-3 text-text/90">
 										Combat Effectiveness
 									</h3>
@@ -315,7 +315,7 @@ const AmmoDetail: React.FC = () => {
 										].map((eff) => (
 											<div
 												key={eff.label}
-												className="bg-secondary/50 rounded-lg p-3 shadow-sm transition-shadow hover:shadow-md"
+												className="bg-secondary/50 rounded-lg p-3 transition-shadow"
 											>
 												<h4 className="font-medium text-xs mb-2 text-text/80 text-center uppercase tracking-wider">
 													{eff.label}
@@ -335,12 +335,12 @@ const AmmoDetail: React.FC = () => {
 								</div>
 
 								{/* Unified Penetration Grid - Updated */}
-								<div className="bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]">
+								<div className="gzwbrown rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]">
 									<h3 className="text-lg font-semibold mb-3 text-text/90">
 										Armor Penetration Profile
 									</h3>
 									{/* Updated grid columns to match unique armor levels */}
-									<div className="grid grid-cols-[auto_repeat(5,_minmax(0,_1fr))] gap-1 bg-secondary/50 p-2 rounded-lg shadow-sm">
+									<div className="grid grid-cols-[auto_repeat(5,_minmax(0,_1fr))] gap-1 bg-secondary/50 p-2 rounded-lg">
 										{/* Header Row - Icon Placeholder */}
 										<div className="text-center text-xs font-medium text-muted" />
 										{/* Header Row - Unique Armor Levels */}
@@ -454,7 +454,7 @@ const AmmoDetail: React.FC = () => {
 								</div>
 
 								{/* Ammunition Profile Text */}
-								<div className="bg-gray-800/40 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]">
+								<div className="gzwbrown rounded-lg p-4 transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02]">
 									<h4 className="font-semibold text-sm mb-2 text-text/90">
 										Summary
 									</h4>
@@ -475,7 +475,7 @@ const AmmoDetail: React.FC = () => {
 											<Link
 												key={item.id}
 												to={`/ammunition/${item.id}`}
-												className="block bg-primary/40 hover:bg-primary/60 rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.03]"
+												className="gzwbrown block bg-primary/40 hover:bg-primary/60 rounded-lg p-3 transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.03]"
 											>
 												<h4 className="font-semibold text-text/90 truncate text-sm mb-0.5">
 													{item.name}
